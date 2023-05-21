@@ -4,6 +4,7 @@
   
 .NavLink {
     padding: 5px;
+    text-decoration: none;
 }
   
 .Active i {
