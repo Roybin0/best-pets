@@ -39,9 +39,9 @@ const NavBar = () => {
         <NavDropdown title="Add Content" id="basic-nav-dropdown">
             <NavLink
                 className={styles.NavLink}
-                to='/tales/new'
+                to='/pets/new'
             >
-                <i className="fas fa-plus"></i> Add a Tale
+                <i className="fas fa-plus"></i> Add a Pet
             </NavLink>
             <NavDropdown.Divider />
             <NavLink
@@ -49,6 +49,13 @@ const NavBar = () => {
                 to='/pics/new'
             >
                 <i className="fas fa-plus"></i> Add a Pic
+            </NavLink>
+            <NavDropdown.Divider />
+            <NavLink
+                className={styles.NavLink}
+                to='/tales/new'
+            >
+                <i className="fas fa-plus"></i> Add a Tale
             </NavLink>
         </NavDropdown>
 
@@ -151,6 +158,7 @@ const NavBar = () => {
                         <NavLink
                             className={styles.NavLink}
                             activeClassName={styles.Active}
+                            exact
                             to='/pics'
                         >
                             <i className="fas fa-image"></i> Pics
@@ -158,6 +166,7 @@ const NavBar = () => {
                         <NavLink
                             className={styles.NavLink}
                             activeClassName={styles.Active}
+                            exact
                             to='/tales'
                         >
                             <i className="fas fa-book"></i> Tales
