@@ -29,6 +29,11 @@ const NavBar = () => {
         }
     };
 
+    const handleNestedLinkClick = (e) => {
+        // Prevent event propagation to the parent dropdown component
+        e.stopPropagation();
+      };
+
     const addContentIcon = (
 
         <NavDropdown title="Add Content" id="basic-nav-dropdown">
@@ -74,6 +79,7 @@ const NavBar = () => {
             <NavDropdown 
                 title={<Avatar src={currentUser?.profile_image} height={40} />} 
                 id="basic-nav-dropdown"
+                onClick={handleNestedLinkClick}
             >
                 <NavLink
                     className={styles.NavLink}
