@@ -68,7 +68,7 @@ function PetCreateForm() {
 
     const textFields = (
         <div className="text-center">
-            <Form.Group>
+            <Form.Group className={styles.Padding}>
                 <Form.Label>Pet Name</Form.Label>
                 <Form.Control
                     type="text"
@@ -83,7 +83,7 @@ function PetCreateForm() {
                 </Alert>
             ))}
 
-            <Form.Group>
+            <Form.Group className={styles.Padding}>
                 <Form.Label>Pet Type</Form.Label>
                 <Form.Control as="select"
                     name="pet_type"
@@ -106,7 +106,7 @@ function PetCreateForm() {
                 </Alert>
             ))}
 
-            <Form.Group>
+            <Form.Group className={`${styles.Padding} pb-4`}>
                 <Form.Label>About</Form.Label>
                 <Form.Control
                     type="textarea"
@@ -122,15 +122,17 @@ function PetCreateForm() {
                 </Alert>
             ))}
 
+            <Button className={btnStyles.Button} type="submit">
+                Add Pet
+            </Button>
+
             <Button
                 className={btnStyles.Button}
                 onClick={() => history.goBack()}
             >
-                cancel
+                Cancel
             </Button>
-            <Button className={btnStyles.Button} type="submit">
-                create
-            </Button>
+
         </div>
     );
 
@@ -138,6 +140,10 @@ function PetCreateForm() {
         <>
             <Form onSubmit={handleSubmit}>
                 <Row>
+                    <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
+                        <h1 className="text-center">Add a Pet</h1>
+                        <Container className={styles.Content}>{textFields}</Container>
+                    </Col>
                     <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
                         <Container
                             className={`${styles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
@@ -182,9 +188,7 @@ function PetCreateForm() {
                             <div className="d-md-none">{textFields}</div>
                         </Container>
                     </Col>
-                    <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
-                        <Container className={styles.Content}>{textFields}</Container>
-                    </Col>
+
                 </Row>
             </Form>
         </>

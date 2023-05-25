@@ -5,6 +5,10 @@
 .Content {
   background-color: #ffffff;
   padding: 10px;
-  border-radius: 15%;
+  border-radius: 5%;
   border: 1px solid #dadadf;
+}
+
+.Padding {
+  padding: 10px;
 }
