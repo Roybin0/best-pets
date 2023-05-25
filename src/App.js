@@ -6,6 +6,7 @@ import './api/axiosDefaults'
 import SignUpForm from './pages/auth/SignUpForm';
 import SignInForm from './pages/auth/SignInForm';
 import PetCreateForm from './pages/pets/PetCreateForm';
+import PicCreateForm from './pages/pics/PicsCreateForm';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route exact path='/signin' render={() => <SignInForm />} />
           <Route exact path='/signup' render={() => <SignUpForm />} />
           <Route exact path='/pets/new' render={() => <PetCreateForm />} />
+          <Route exact path='/pics/new' render={() => <PicCreateForm />} />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>
       </Container>
