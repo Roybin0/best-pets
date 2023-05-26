@@ -20,10 +20,11 @@ function TaleCreateForm() {
     const [taleData, setTaleData] = useState({
         pet: "",
         image: "",
+        tldr: "",
         tale: "",
     });
 
-    const { pet, image, tale } = taleData;
+    const { pet, image, tldr, tale } = taleData;
 
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username;
@@ -34,7 +35,10 @@ function TaleCreateForm() {
     const history = useHistory();
     const imageInput = useRef(null);
 
-    useEffect(() => {
+    const [defaultImages, setDefaultImages] = useState({});
+
+    // Fetch all pets belonging to the current user
+    useEffect(() => { 
         const fetchPets = async () => {
             try {
                 const encodedOwner = encodeURIComponent(is_owner);
@@ -49,7 +53,20 @@ function TaleCreateForm() {
         if (currentUser?.username) {
             fetchPets();
         }
-    }, [currentUser, is_owner])
+    }, [currentUser, is_owner]);
+
+    // Set pet profile image to default if no image is added
+    useEffect(() => {
+        const petDefaultImages = {};
+
+        pets.results.forEach((pet) => {
+            if (pet.image) {
+                petDefaultImages[pet.id] = pet.image.url;
+            }
+        });
+
+        setDefaultImages(petDefaultImages);
+    }, [pets.results]);
 
     const handleChange = (event) => {
         setTaleData({
@@ -73,7 +90,13 @@ function TaleCreateForm() {
         const formData = new FormData();
 
         formData.append("pet", pet)
-        formData.append("image", imageInput.current.files[0])
+        if (imageInput.current.files.length > 0) {
+            const imageFile = imageInput.current.files[0];
+            formData.append("image", imageFile);
+          } else if (defaultImages[pet]) {
+            formData.append("image", defaultImages[pet]);
+          }
+        formData.append("tldr", tldr)
         formData.append("tale", tale)
 
         try {
@@ -95,7 +118,7 @@ function TaleCreateForm() {
                     as="select"
                     name="pet"
                     value={pet}
-                    onChange={handleChange} 
+                    onChange={handleChange}
                 >
                     {pets.results.map((pet) => (
                         <option key={pet.id} value={pet.id}>
@@ -111,20 +134,34 @@ function TaleCreateForm() {
             ))}
 
             <Form.Group className={`${styles.Padding} pb-4`}>
+                <Form.Label>TL;DR:</Form.Label>
+                <Form.Control
+                    type="text"
+                    name="tldr"
+                    placeholder="Provide a shortened version of your tale"
+                    maxLength={255}
+                    value={tldr}
+                    onChange={handleChange}
+                />
+            </Form.Group>
+            {errors?.tldr?.map((message, idx) => (
+                <Alert variant="warning" key={idx}>
+                    {message}
+                </Alert>
+            ))}
+
+
+            <Form.Group className={`${styles.Padding} pb-4`}>
                 <Form.Label>Tell your tale</Form.Label>
                 <Form.Control
                     as="textarea"
                     name="tale"
-                    rows={15}
-                    aria-describedby="taleHelp"
+                    rows={10}
                     value={tale}
                     onChange={handleChange}
                 />
-                <Form.Text id="taleHelp" muted>
-                    
-                </Form.Text>
             </Form.Group>
-            {errors?.about?.map((message, idx) => (
+            {errors?.tale?.map((message, idx) => (
                 <Alert variant="warning" key={idx}>
                     {message}
                 </Alert>
