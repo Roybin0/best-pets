@@ -120,7 +120,7 @@ function PicCreateForm() {
                     value={description}
                     onChange={handleChange}
                 />
-                <Form.Text id="passwordHelpBlock" muted>
+                <Form.Text id="descriptionHelp" muted>
                     Add a short description about this image if you want!
                 </Form.Text>
             </Form.Group>
