@@ -8,6 +8,8 @@ import SignInForm from './pages/auth/SignInForm';
 import PetCreateForm from './pages/pets/PetCreateForm';
 import PicCreateForm from './pages/pics/PicsCreateForm';
 import TaleCreateForm from './pages/tales/TalesCreateForm';
+import PetPage from './pages/pets/PetPage';
+import PetsPage from './pages/pets/PetsPage';
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
           <Route exact path='/signin' render={() => <SignInForm />} />
           <Route exact path='/signup' render={() => <SignUpForm />} />
           <Route exact path='/pets/new' render={() => <PetCreateForm />} />
+          <Route exact path='/pets/' render={() => <PetsPage />} />
+          <Route exact path='/pets/:id' render={() => <PetPage />} />
           <Route exact path='/pics/new' render={() => <PicCreateForm />} />
           <Route exact path='/tales/new' render={() => <TaleCreateForm />} />
           <Route render={() => <p>Page not found!</p>} />
