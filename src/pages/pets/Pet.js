@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "../../styles/Pet.module.css"
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Card from 'react-bootstrap/Card';
@@ -7,7 +7,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { Link, useHistory } from 'react-router-dom';
 import Avatar from '../../components/Avatar';
-import { axiosRes } from '../../api/axiosDefaults';
+import { axiosReq, axiosRes } from '../../api/axiosDefaults';
 import { MoreDropdown } from '../../components/MoreDropdown';
 
 
@@ -17,7 +17,6 @@ const Pet = (props) => {
         id,
         owner,
         owner_id,
-        owner_image,
         name,
         pet_type,
         likes_count,
@@ -32,6 +31,22 @@ const Pet = (props) => {
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username === owner;
     const history = useHistory();
+
+    const [ownerDetails, setOwnerDetails] = useState(null);
+
+    useEffect(() => {
+        const fetchOwnerDetails = async () => {
+            try {
+                const { data } = await axiosReq.get(`/owners/${owner_id}`);
+                console.log(data)
+                setOwnerDetails(data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchOwnerDetails();
+    }, [owner_id])
 
     const handleEdit = () => {
         history.push(`/pets/${id}/edit`)
@@ -91,7 +106,7 @@ const Pet = (props) => {
             console.log(err);
         }
     };
-    
+
     const handleUnlike = async () => {
         try {
             await axiosRes.delete(`/likes/${like_id}`);
@@ -111,10 +126,15 @@ const Pet = (props) => {
 
             <Card.Body>
                 <Media className='align-items-center justify-content-between'>
-                    <Link to={`/owners/${owner_id}`}>
-                        <Avatar src={owner_image} height={55} />
-                        {owner}
-                    </Link>
+                    { ownerDetails ? (
+                        <Link to={`/owners/${owner_id}`}>
+                            <Avatar src={ownerDetails.image} height={55} />
+                            {owner}
+                        </Link>
+                    ) : (
+                        <span>Loading owner...</span>
+                    )}
+                    
                     <div className='d-flex align-items-center'>
                         <span>{updated_at}</span>
                         {is_owner && petPage && (
@@ -133,7 +153,7 @@ const Pet = (props) => {
 
             <Card.Body>
                 {name && <Card.Title className='text-center'>{name}</Card.Title>}
-                {pet_type && <Card.Text>{pet_type}</Card.Text>}
+                {pet_type && <Card.Text>Category: {pet_type}</Card.Text>}
                 {about && <Card.Text>{about}</Card.Text>}
                 <div className={styles.PetBar}>
                     {is_owner ? (

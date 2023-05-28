@@ -19,7 +19,7 @@ function PetPage() {
   const [pet, setPet] = useState({ results: [] });
 
   const currentUser = useCurrentUser();
-  const profile_image = currentUser?.profile_image;
+  // const owner_image = currentUser?.owner_image;
   // const [comments, setComments] = useState({ results: [] });
 
   useEffect(() => {
