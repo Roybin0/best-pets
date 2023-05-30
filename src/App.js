@@ -10,6 +10,8 @@ import PicCreateForm from './pages/pics/PicsCreateForm';
 import TaleCreateForm from './pages/tales/TalesCreateForm';
 import PetPage from './pages/pets/PetPage';
 import PetsPage from './pages/pets/PetsPage';
+import PicPage from './pages/pics/PicPage';
+import PicsPage from './pages/pics/PicsPage';
 
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
           <Route exact path='/pets/' render={() => <PetsPage />} />
           <Route exact path='/pets/:id' render={() => <PetPage />} />
           <Route exact path='/pics/new' render={() => <PicCreateForm />} />
+          <Route exact path='/pics/' render={() => <PicsPage />} />
+          <Route exact path='/pics/:id' render={() => <PicPage />} />
           <Route exact path='/tales/new' render={() => <TaleCreateForm />} />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>

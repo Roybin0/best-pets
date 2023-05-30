@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styles from "../../styles/Pet.module.css"
+import styles from "../../styles/Pic.module.css"
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Card from 'react-bootstrap/Card';
 import Media from 'react-bootstrap/Media';
@@ -11,20 +11,21 @@ import { axiosReq, axiosRes } from '../../api/axiosDefaults';
 import { MoreDropdown } from '../../components/MoreDropdown';
 
 
-const Pet = (props) => {
+const Pic = (props) => {
 
     const {
         id,
         owner,
         owner_id,
-        name,
+        // pet_id,
+        pet_name,
         pet_type,
-        likes_count,
-        about,
         image,
+        description,
         // created_at,
+        likes_count,
         updated_at,
-        petPage,
+        picPage,
         // setPets,
     } = props;
 
@@ -51,11 +52,11 @@ const Pet = (props) => {
     }, [owner_id]);
 
     useEffect(() => {
-        // Check if pet is liked by the current user
+        // Check if petpic is liked by the current user
         const checkLikedStatus = async () => {
             if (currentUser && currentUser.username) {
                 try {
-                    const { data } = await axiosReq.get(`/likes/?owner__username=${currentUser.username}&object_id=${id}&content_type__model=pet`);
+                    const { data } = await axiosReq.get(`/likes/?owner__username=${currentUser.username}&object_id=${id}&content_type__model=petpic`);
                     if (data.results.length > 0) {
                         setLiked(true);
                         setLikeId(data.results[0].like_id);
@@ -70,12 +71,12 @@ const Pet = (props) => {
     }, [currentUser, id]);
 
     const handleEdit = () => {
-        history.push(`/pets/${id}/edit`)
+        history.push(`/pics/${id}/edit`)
     };
 
     const handleDelete = async () => {
         try {
-            await axiosRes.delete(`/pets/${id}`);
+            await axiosRes.delete(`/petpics/${id}`);
             history.goBack();
         } catch (err) {
             console.log(err);
@@ -84,7 +85,7 @@ const Pet = (props) => {
 
     const fetchPetDetails = async () => {
         try {
-          const { data } = await axiosReq.get(`/pets/${id}`);
+          const { data } = await axiosReq.get(`/petpics/${id}`);
           if (data) {
             // Update the likes_count from the server response
             setLikesCount(data.likes_count);
@@ -97,7 +98,7 @@ const Pet = (props) => {
     const handleLike = async () => {
         try {
             if (!liked) {
-                const { data } = await axiosRes.post('/likes/', { object_id: id, content_type: 'pet' });
+                const { data } = await axiosRes.post('/likes/', { object_id: id, content_type: 'petpic' });
                 setLiked(true);
                 setLikeId(data.like_id);
                 fetchPetDetails();
@@ -136,7 +137,7 @@ const Pet = (props) => {
 
                     <div className='d-flex align-items-center'>
                         <span>{updated_at}</span>
-                        {is_owner && petPage && (
+                        {is_owner && picPage && (
                             <MoreDropdown
                                 handleEdit={handleEdit}
                                 handleDelete={handleDelete}
@@ -146,14 +147,14 @@ const Pet = (props) => {
                 </Media>
             </Card.Body>
 
-            <Link to={`/pets/${id}`}>
-                <Card.Img src={image} alt={name} />
+            <Link to={`/pics/${id}`}>
+                <Card.Img className={styles.Pic} src={image} alt={description} />
             </Link>
 
             <Card.Body>
-                {name && <Card.Title className='text-center'>Name: {name}</Card.Title>}
+                {pet_name && <Card.Title className='text-center'>Name: {pet_name}</Card.Title>}
                 {pet_type && <Card.Text>Category: {pet_type}</Card.Text>}
-                {about && <Card.Text>{about}</Card.Text>}
+                {description && <Card.Text>{description}</Card.Text>}
                 <div className={styles.PetBar}>
                     {is_owner ? (
                         <OverlayTrigger placement='top' overlay={<Tooltip>You can't like your own pet!</Tooltip>}>
@@ -168,12 +169,12 @@ const Pet = (props) => {
                             <i className={`far fa-heart ${styles.HeartOutline}`} />
                         </span>
                     ) : (
-                        <OverlayTrigger placement='top' overlay={<Tooltip>Log in to like pets!</Tooltip>}>
+                        <OverlayTrigger placement='top' overlay={<Tooltip>Log in to like pics!</Tooltip>}>
                             <i className='far fa-heart' />
                         </OverlayTrigger>
                     )}
                     {likesCount}
-                    <Link to={`/pets/${id}`}>
+                    <Link to={`/pics/${id}`}>
                         <i className='far fa-comments' />
                     </Link>
                     {/* {comments_count} */}
@@ -184,4 +185,4 @@ const Pet = (props) => {
     );
 };
 
-export default Pet
+export default Pic
