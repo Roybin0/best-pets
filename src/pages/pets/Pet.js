@@ -20,12 +20,11 @@ const Pet = (props) => {
         name,
         pet_type,
         likes_count,
-        like_id,
         about,
         image,
         updated_at,
         petPage,
-        setPets,
+        // setPets,
     } = props;
 
     const currentUser = useCurrentUser();
@@ -33,12 +32,14 @@ const Pet = (props) => {
     const history = useHistory();
 
     const [ownerDetails, setOwnerDetails] = useState(null);
+    const [liked, setLiked] = useState(false);
+    const [likeId, setLikeId] = useState(null);
+    const [likesCount, setLikesCount] = useState(likes_count);
 
     useEffect(() => {
         const fetchOwnerDetails = async () => {
             try {
                 const { data } = await axiosReq.get(`/owners/${owner_id}`);
-                console.log(data)
                 setOwnerDetails(data);
             } catch (err) {
                 console.log(err);
@@ -46,7 +47,26 @@ const Pet = (props) => {
         };
 
         fetchOwnerDetails();
-    }, [owner_id])
+    }, [owner_id]);
+
+    useEffect(() => {
+        // Check if pet is liked by the current user
+        const checkLikedStatus = async () => {
+            if (currentUser && currentUser.username) {
+                try {
+                    const { data } = await axiosReq.get(`/likes/?owner__username=${currentUser.username}&object_id=${id}&content_type__model=pet`);
+                    if (data.results.length > 0) {
+                        setLiked(true);
+                        setLikeId(data.results[0].like_id);
+                      }
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+        };
+
+        checkLikedStatus();
+    }, [currentUser, id]);
 
     const handleEdit = () => {
         history.push(`/pets/${id}/edit`)
@@ -61,47 +81,26 @@ const Pet = (props) => {
         }
     };
 
-    // const handleLike = async () => {
-    //     try {
-    //         const { data } = await axiosRes.post('/likes/', { pet: id });
-    //         setPets((prevPets) => ({
-    //             ...prevPets,
-    //             results: prevPets.results.map((pet) => {
-    //                 return pet.id === id
-    //                     ? { ...pet, likes_count: pet.likes_count + 1, like_id: data.id }
-    //                     : pet;
-    //             }),
-    //         }));
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // };
-
-    // const handleUnlike = async () => {
-    //     try {
-    //         await axiosRes.delete(`/likes/${like_id}`);
-    //         setPets((prevPets) => ({
-    //             ...prevPets,
-    //             results: prevPets.results.map((pet) => {
-    //                 return pet.id === id
-    //                     ? { ...pet, likes_count: pet.likes_count - 1, like_id: null }
-    //                     : pet;
-    //             }),
-    //         }));
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // };
+    const fetchPetDetails = async () => {
+        try {
+          const { data } = await axiosReq.get(`/pets/${id}`);
+          if (data) {
+            // Update the likes_count from the server response
+            setLikesCount(data.likes_count);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
 
     const handleLike = async () => {
         try {
-            const { data } = await axiosRes.post('/likes/', { pet_id: id });
-            setPets((prevPets) => ({
-                ...prevPets,
-                results: prevPets.results.map((pet) =>
-                    pet.id === id ? { ...pet, likes_count: pet.likes_count + 1, like_id: data.id } : pet
-                ),
-            }));
+            if (!liked) {
+                const { data } = await axiosRes.post('/likes/', { object_id: id, content_type: 'pet' });
+                setLiked(true);
+                setLikeId(data.like_id);
+                fetchPetDetails();
+            }
         } catch (err) {
             console.log(err);
         }
@@ -109,13 +108,12 @@ const Pet = (props) => {
 
     const handleUnlike = async () => {
         try {
-            await axiosRes.delete(`/likes/${like_id}`);
-            setPets((prevPets) => ({
-                ...prevPets,
-                results: prevPets.results.map((pet) =>
-                    pet.id === id ? { ...pet, likes_count: pet.likes_count - 1, like_id: null } : pet
-                ),
-            }));
+            if (likeId) {
+                await axiosRes.delete(`/likes/${likeId}`);
+                setLiked(false);
+                setLikeId(null);
+                fetchPetDetails();
+            }
         } catch (err) {
             console.log(err);
         }
@@ -126,7 +124,7 @@ const Pet = (props) => {
 
             <Card.Body>
                 <Media className='align-items-center justify-content-between'>
-                    { ownerDetails ? (
+                    {ownerDetails ? (
                         <Link to={`/owners/${owner_id}`}>
                             <Avatar src={ownerDetails.image} height={55} />
                             {owner}
@@ -134,7 +132,7 @@ const Pet = (props) => {
                     ) : (
                         <span>Loading owner...</span>
                     )}
-                    
+
                     <div className='d-flex align-items-center'>
                         <span>{updated_at}</span>
                         {is_owner && petPage && (
@@ -152,7 +150,7 @@ const Pet = (props) => {
             </Link>
 
             <Card.Body>
-                {name && <Card.Title className='text-center'>{name}</Card.Title>}
+                {name && <Card.Title className='text-center'>Name: {name}</Card.Title>}
                 {pet_type && <Card.Text>Category: {pet_type}</Card.Text>}
                 {about && <Card.Text>{about}</Card.Text>}
                 <div className={styles.PetBar}>
@@ -160,7 +158,7 @@ const Pet = (props) => {
                         <OverlayTrigger placement='top' overlay={<Tooltip>You can't like your own pet!</Tooltip>}>
                             <i className='far fa-heart' />
                         </OverlayTrigger>
-                    ) : like_id ? (
+                    ) : likeId ? (
                         <span onClick={handleUnlike}>
                             <i className={`fas fa-heart ${styles.Heart}`} />
                         </span>
@@ -173,7 +171,7 @@ const Pet = (props) => {
                             <i className='far fa-heart' />
                         </OverlayTrigger>
                     )}
-                    {likes_count}
+                    {likesCount}
                     <Link to={`/pets/${id}`}>
                         <i className='far fa-comments' />
                     </Link>
