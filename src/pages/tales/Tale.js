@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styles from "../../styles/Pic.module.css"
+import styles from "../../styles/Tale.module.css"
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Card from 'react-bootstrap/Card';
 import Media from 'react-bootstrap/Media';
@@ -17,15 +17,18 @@ const Pic = (props) => {
         id,
         owner,
         owner_id,
+        owner_profile_image,
         // pet_id,
         pet_name,
         pet_type,
         image,
-        description,
+        tldr,
+        tale,
         // created_at,
         likes_count,
+        // comments_count,
         updated_at,
-        picPage,
+        talePage,
         // setPets,
     } = props;
 
@@ -33,30 +36,16 @@ const Pic = (props) => {
     const is_owner = currentUser?.username === owner;
     const history = useHistory();
 
-    const [ownerDetails, setOwnerDetails] = useState(null);
     const [liked, setLiked] = useState(false);
     const [likeId, setLikeId] = useState(null);
     const [likesCount, setLikesCount] = useState(likes_count);
 
     useEffect(() => {
-        const fetchOwnerDetails = async () => {
-            try {
-                const { data } = await axiosReq.get(`/owners/${owner_id}`);
-                setOwnerDetails(data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
-        fetchOwnerDetails();
-    }, [owner_id]);
-
-    useEffect(() => {
-        // Check if petpic is liked by the current user
+        // Check if pettale is liked by the current user
         const checkLikedStatus = async () => {
             if (currentUser && currentUser.username) {
                 try {
-                    const { data } = await axiosReq.get(`/likes/?owner__username=${currentUser.username}&object_id=${id}&content_type__model=petpic`);
+                    const { data } = await axiosReq.get(`/likes/?owner__username=${currentUser.username}&object_id=${id}&content_type__model=pettale`);
                     if (data.results.length > 0) {
                         setLiked(true);
                         setLikeId(data.results[0].like_id);
@@ -71,21 +60,21 @@ const Pic = (props) => {
     }, [currentUser, id]);
 
     const handleEdit = () => {
-        history.push(`/pics/${id}/edit`)
+        history.push(`/tales/${id}/edit`)
     };
 
     const handleDelete = async () => {
         try {
-            await axiosRes.delete(`/petpics/${id}`);
+            await axiosRes.delete(`/pettales/${id}`);
             history.goBack();
         } catch (err) {
             console.log(err);
         }
     };
 
-    const fetchPetPicDetails = async () => {
+    const fetchPetTaleDetails = async () => {
         try {
-          const { data } = await axiosReq.get(`/petpics/${id}`);
+          const { data } = await axiosReq.get(`/pettales/${id}`);
           if (data) {
             // Update the likes_count from the server response
             setLikesCount(data.likes_count);
@@ -98,10 +87,10 @@ const Pic = (props) => {
     const handleLike = async () => {
         try {
             if (!liked) {
-                const { data } = await axiosRes.post('/likes/', { object_id: id, content_type: 'petpic' });
+                const { data } = await axiosRes.post('/likes/', { object_id: id, content_type: 'pettale' });
                 setLiked(true);
                 setLikeId(data.like_id);
-                fetchPetPicDetails();
+                fetchPetTaleDetails();
             }
         } catch (err) {
             console.log(err);
@@ -114,7 +103,7 @@ const Pic = (props) => {
                 await axiosRes.delete(`/likes/${likeId}`);
                 setLiked(false);
                 setLikeId(null);
-                fetchPetPicDetails();
+                fetchPetTaleDetails();
             }
         } catch (err) {
             console.log(err);
@@ -126,9 +115,9 @@ const Pic = (props) => {
 
             <Card.Body>
                 <Media className='align-items-center justify-content-between'>
-                    {ownerDetails ? (
+                    {owner_profile_image ? (
                         <Link to={`/owners/${owner_id}`}>
-                            <Avatar src={ownerDetails.image} height={55} />
+                            <Avatar src={owner_profile_image} height={55} />
                             {owner}
                         </Link>
                     ) : (
@@ -137,7 +126,7 @@ const Pic = (props) => {
 
                     <div className='d-flex align-items-center'>
                         <span>{updated_at}</span>
-                        {is_owner && picPage && (
+                        {is_owner && talePage && (
                             <MoreDropdown
                                 handleEdit={handleEdit}
                                 handleDelete={handleDelete}
@@ -147,17 +136,18 @@ const Pic = (props) => {
                 </Media>
             </Card.Body>
 
-            <Link to={`/pics/${id}`}>
-                <Card.Img className={styles.Pic} src={image} alt={description} />
+            <Link to={`/tales/${id}`}>
+                <Card.Img className={styles.Pic} src={image} alt={tldr} />
             </Link>
 
             <Card.Body>
                 {pet_name && <Card.Title className='text-center'>Name: {pet_name}</Card.Title>}
                 {pet_type && <Card.Text>Category: {pet_type}</Card.Text>}
-                {description && <Card.Text>{description}</Card.Text>}
+                {tldr && <Card.Text>{tldr}</Card.Text>}
+                {tale && <Card.Text>{tale}</Card.Text>}
                 <div className={styles.PetBar}>
                     {is_owner ? (
-                        <OverlayTrigger placement='top' overlay={<Tooltip>You can't like your own pet!</Tooltip>}>
+                        <OverlayTrigger placement='top' overlay={<Tooltip>You can't like your own tale!</Tooltip>}>
                             <i className='far fa-heart' />
                         </OverlayTrigger>
                     ) : likeId ? (
@@ -174,7 +164,7 @@ const Pic = (props) => {
                         </OverlayTrigger>
                     )}
                     {likesCount}
-                    <Link to={`/pics/${id}`}>
+                    <Link to={`/tales/${id}`}>
                         <i className='far fa-comments' />
                     </Link>
                     {/* {comments_count} */}
