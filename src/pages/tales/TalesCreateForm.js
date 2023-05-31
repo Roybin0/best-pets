@@ -38,13 +38,13 @@ function TaleCreateForm() {
     const [defaultImages, setDefaultImages] = useState({});
 
     // Fetch all pets belonging to the current user
-    useEffect(() => { 
+    useEffect(() => {
         const fetchPets = async () => {
             try {
                 const encodedOwner = encodeURIComponent(is_owner);
                 const { data } = await axiosReq.get(`/pets/?owner__username=${encodedOwner}`);
                 setPets(data);
-                console.log("API response:", data);
+                // console.log("API response:", data);
             } catch (err) {
                 console.log(err);
             }
@@ -93,9 +93,21 @@ function TaleCreateForm() {
         if (imageInput.current.files.length > 0) {
             const imageFile = imageInput.current.files[0];
             formData.append("image", imageFile);
-          } else if (defaultImages[pet]) {
-            formData.append("image", defaultImages[pet]);
-          }
+        } else {
+            const selectedPet = pets.results.find((pet) => pet.id === pet);
+            const defaultImage = selectedPet?.image;
+
+            // Fetch the default image as a Blob object
+            if (defaultImage) {
+                try {
+                    const response = await fetch(defaultImage);
+                    const blob = await response.blob();
+                    formData.append("image", blob);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }
         formData.append("tldr", tldr)
         formData.append("tale", tale)
 

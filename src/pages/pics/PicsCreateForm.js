@@ -40,7 +40,7 @@ function PicCreateForm() {
                 const encodedOwner = encodeURIComponent(is_owner);
                 const { data } = await axiosReq.get(`/pets/?owner__username=${encodedOwner}`);
                 setPets(data);
-                console.log("API response:", data);
+                // console.log("API response:", data);
             } catch (err) {
                 console.log(err);
             }

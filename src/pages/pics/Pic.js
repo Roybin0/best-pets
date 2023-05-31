@@ -17,6 +17,7 @@ const Pic = (props) => {
         id,
         owner,
         owner_id,
+        owner_profile_image,
         // pet_id,
         pet_name,
         pet_type,
@@ -33,23 +34,9 @@ const Pic = (props) => {
     const is_owner = currentUser?.username === owner;
     const history = useHistory();
 
-    const [ownerDetails, setOwnerDetails] = useState(null);
     const [liked, setLiked] = useState(false);
     const [likeId, setLikeId] = useState(null);
     const [likesCount, setLikesCount] = useState(likes_count);
-
-    useEffect(() => {
-        const fetchOwnerDetails = async () => {
-            try {
-                const { data } = await axiosReq.get(`/owners/${owner_id}`);
-                setOwnerDetails(data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
-        fetchOwnerDetails();
-    }, [owner_id]);
 
     useEffect(() => {
         // Check if petpic is liked by the current user
@@ -126,9 +113,9 @@ const Pic = (props) => {
 
             <Card.Body>
                 <Media className='align-items-center justify-content-between'>
-                    {ownerDetails ? (
+                    {owner_profile_image ? (
                         <Link to={`/owners/${owner_id}`}>
-                            <Avatar src={ownerDetails.image} height={55} />
+                            <Avatar src={owner_profile_image} height={55} />
                             {owner}
                         </Link>
                     ) : (
