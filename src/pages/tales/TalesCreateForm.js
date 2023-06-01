@@ -113,7 +113,7 @@ function TaleCreateForm() {
 
         try {
             const { data } = await axiosReq.post("/pettales/", formData);
-            history.push(`/pettales/${data.id}`);
+            history.push(`/tales/${data.id}`);
         } catch (err) {
             console.log(err)
             if (err.response?.status !== 401) {

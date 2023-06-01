@@ -78,7 +78,7 @@ function PicCreateForm() {
 
         try {
             const { data } = await axiosReq.post("/petpics/", formData);
-            history.push(`/petpics/${data.id}`);
+            history.push(`/pics/${data.id}`);
         } catch (err) {
             console.log(err)
             if (err.response?.status !== 401) {
