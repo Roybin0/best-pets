@@ -88,7 +88,7 @@ function TalesPage({ message, filter = "" }) {
   
             ) : (
               <Container className={appStyles.Content}>
-                <Asset src={NoResults} message={message} />
+                <Asset src={NoResults} message="No tales found, try again!" />
               </Container>
             )}
           </>

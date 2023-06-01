@@ -87,7 +87,7 @@ function PetsPage({ message, filter = "" }) {
   
             ) : (
               <Container className={appStyles.Content}>
-                <Asset src={NoResults} message={message} />
+                <Asset src={NoResults} message="No pets found, try again!" />
               </Container>
             )}
           </>

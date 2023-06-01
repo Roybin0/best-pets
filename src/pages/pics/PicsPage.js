@@ -87,7 +87,7 @@ function PicsPage({ message, filter = "" }) {
   
             ) : (
               <Container className={appStyles.Content}>
-                <Asset src={NoResults} message={message} />
+                <Asset src={NoResults} message="No pics found! Try again." />
               </Container>
             )}
           </>
