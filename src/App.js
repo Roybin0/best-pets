@@ -14,6 +14,9 @@ import PicPage from './pages/pics/PicPage';
 import PicsPage from './pages/pics/PicsPage';
 import TalesPage from './pages/tales/TalesPage';
 import TalePage from './pages/tales/TalePage';
+import PetEditForm from './pages/pets/PetEditForm';
+import PicEditForm from './pages/pics/PicEditForm';
+import TaleEditForm from './pages/tales/TaleEditForm';
 
 
 function App() {
@@ -29,12 +32,15 @@ function App() {
           <Route exact path='/pets/new' render={() => <PetCreateForm />} />
           <Route exact path='/pets/' render={() => <PetsPage />} />
           <Route exact path='/pets/:id' render={() => <PetPage />} />
+          <Route exact path='/pets/:id/edit' render={() => <PetEditForm />} />
           <Route exact path='/pics/new' render={() => <PicCreateForm />} />
           <Route exact path='/pics/' render={() => <PicsPage />} />
           <Route exact path='/pics/:id' render={() => <PicPage />} />
+          <Route exact path='/pics/:id/edit' render={() => <PicEditForm />} />
           <Route exact path='/tales/new' render={() => <TaleCreateForm />} />
           <Route exact path='/tales/' render={() => <TalesPage />} />
           <Route exact path='/tales/:id' render={() => <TalePage />} />
+          <Route exact path='/tales/:id/edit' render={() => <TaleEditForm />} />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>
       </Container>
