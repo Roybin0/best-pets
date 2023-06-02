@@ -6,9 +6,9 @@ import appStyles from "../../App.module.css";
 import { useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import Pet from "./Pet";
-// import CommentCreateForm from "../comments/CommentCreateForm";
+import CommentCreateForm from "../comments/CommentCreateForm";
 import { useCurrentUser } from "../../contexts/CurrentUserContext"
-// import Comment from "../comments/Comment";
+import Comment from "../comments/Comment";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Asset from "../../components/Asset";
 import { fetchMoreData } from "../../utils/utils";
@@ -19,20 +19,21 @@ function PetPage() {
   const [pet, setPet] = useState({ results: [] });
 
   const currentUser = useCurrentUser();
-  // const owner_image = currentUser?.owner_image;
-  // const [comments, setComments] = useState({ results: [] });
+  const owner_image = currentUser?.profile_image;
+  const asset_type = "pet"
+  const [comments, setComments] = useState({ results: [] });
 
   useEffect(() => {
     const handleMount = async () => {
       try {
-        const [{ data: pet }] = await Promise.all([
+        const [{ data: pet }, { data: comments } ] = await Promise.all([
           axiosReq.get(`/pets/${id}`),
-          // axiosReq.get(`/comments/?post=${id}`) , ^^{ data: comments }
+          axiosReq.get(`/comments/?pet=${id}`) 
         ])
         setPet({ results: [pet] })
-        // setComments(comments)
+        setComments(comments)
       } catch (err) {
-        // console.log(err)
+        console.log(err)
       }
     };
 
@@ -45,13 +46,14 @@ function PetPage() {
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         {/* <PopularProfiles mobile /> */}
         <Pet {...pet.results[0]} setPets={setPet} petPage />
-        {/* <Container className={appStyles.Content}>
+        <Container className={appStyles.Content}>
           {currentUser ? (
             <CommentCreateForm
-              profile_id={currentUser.profile_id}
-              profileImage={profile_image}
-              post={id}
-              setPost={setPost}
+              owner_id={currentUser.owner_id}
+              owner_image={owner_image}
+              asset_type={asset_type}
+              asset={id}
+              setAsset={setPet}
               setComments={setComments}
             />
           ) : comments.results.length ? (
@@ -63,7 +65,7 @@ function PetPage() {
                 <Comment
                   key={comment.id}
                   {...comment}
-                  setPost={setPost}
+                  setAsset={setPet}
                   setComments={setComments}
                 />
               ))}
@@ -77,7 +79,7 @@ function PetPage() {
           ) : (
             <span>No comments ... yet!</span>
           )}
-        </Container> */}
+        </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
         {/* <PopularProfiles /> */}

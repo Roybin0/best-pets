@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-// import Container from "react-bootstrap/Container";
-// import appStyles from "../../App.module.css";
+import Container from "react-bootstrap/Container";
+import appStyles from "../../App.module.css";
 import { useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import Pic from "././Pic";
-// import CommentCreateForm from "../comments/CommentCreateForm";
+import CommentCreateForm from "../comments/CommentCreateForm";
 import { useCurrentUser } from "../../contexts/CurrentUserContext"
-// import Comment from "../comments/Comment";
-// import InfiniteScroll from "react-infinite-scroll-component";
-// import Asset from "../../components/Asset";
-// import { fetchMoreData } from "../../utils/utils";
+import Comment from "../comments/Comment";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Asset from "../../components/Asset";
+import { fetchMoreData } from "../../utils/utils";
 // import PopularProfiles from "../profiles/PopularProfiles";
 
 function PicPage() {
@@ -19,20 +19,21 @@ function PicPage() {
   const [pic, setPic] = useState({ results: [] });
 
   const currentUser = useCurrentUser();
-  // const owner_image = currentUser?.owner_image;
-  // const [comments, setComments] = useState({ results: [] });
+  const owner_image = currentUser?.profile_image;
+  const asset_type = "pet_pic"
+  const [comments, setComments] = useState({ results: [] });
 
   useEffect(() => {
     const handleMount = async () => {
       try {
-        const [{ data: pic }] = await Promise.all([
+        const [{ data: pic }, { data: comments }] = await Promise.all([
           axiosReq.get(`/petpics/${id}`),
-          // axiosReq.get(`/comments/?post=${id}`) , ^^{ data: comments }
+          axiosReq.get(`/comments/?pet_pic=${id}`)
         ])
         setPic({ results: [pic] })
-        // setComments(comments)
+        setComments(comments)
       } catch (err) {
-        // console.log(err)
+        console.log(err)
       }
     };
 
@@ -45,13 +46,14 @@ function PicPage() {
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         {/* <PopularProfiles mobile /> */}
         <Pic {...pic.results[0]} setPics={setPic} picPage />
-        {/* <Container className={appStyles.Content}>
+        <Container className={appStyles.Content}>
           {currentUser ? (
             <CommentCreateForm
-              profile_id={currentUser.profile_id}
-              profileImage={profile_image}
-              post={id}
-              setPost={setPost}
+              owner_id={currentUser.owner_id}
+              owner_image={owner_image}
+              asset_type={asset_type}
+              asset={id}
+              setAsset={setPic}
               setComments={setComments}
             />
           ) : comments.results.length ? (
@@ -63,7 +65,7 @@ function PicPage() {
                 <Comment
                   key={comment.id}
                   {...comment}
-                  setPost={setPost}
+                  setAsset={setPic}
                   setComments={setComments}
                 />
               ))}
@@ -77,7 +79,7 @@ function PicPage() {
           ) : (
             <span>No comments ... yet!</span>
           )}
-        </Container> */}
+        </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
         {/* <PopularProfiles /> */}

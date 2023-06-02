@@ -26,7 +26,7 @@ const Pic = (props) => {
         tale,
         // created_at,
         likes_count,
-        // comments_count,
+        comments_count,
         updated_at,
         talePage,
         // setPets,
@@ -167,7 +167,7 @@ const Pic = (props) => {
                     <Link to={`/tales/${id}`}>
                         <i className='far fa-comments' />
                     </Link>
-                    {/* {comments_count} */}
+                    {comments_count}
                 </div>
             </Card.Body>
 

@@ -18,16 +18,15 @@ const Pic = (props) => {
         owner,
         owner_id,
         owner_profile_image,
-        // pet_id,
         pet_name,
         pet_type,
         image,
         description,
         // created_at,
         likes_count,
+        comments_count,
         updated_at,
         picPage,
-        // setPets,
     } = props;
 
     const currentUser = useCurrentUser();
@@ -149,11 +148,11 @@ const Pic = (props) => {
                         </OverlayTrigger>
                     ) : likeId ? (
                         <span onClick={handleUnlike}>
-                            <i className={`fas fa-heart ${styles.Heart}`} />
+                            <i className={`fas fa-heart ${styles.Heart}`} />               
                         </span>
                     ) : currentUser ? (
                         <span onClick={handleLike}>
-                            <i className={`far fa-heart ${styles.HeartOutline}`} />
+                            <i className={`far fa-heart ${styles.HeartOutline}`} /> 
                         </span>
                     ) : (
                         <OverlayTrigger placement='top' overlay={<Tooltip>Log in to like pics!</Tooltip>}>
@@ -164,7 +163,7 @@ const Pic = (props) => {
                     <Link to={`/pics/${id}`}>
                         <i className='far fa-comments' />
                     </Link>
-                    {/* {comments_count} */}
+                    {comments_count}
                 </div>
             </Card.Body>
 

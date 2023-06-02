@@ -20,6 +20,7 @@ const Pet = (props) => {
         name,
         pet_type,
         likes_count,
+        comments_count,
         about,
         image,
         // created_at,
@@ -53,13 +54,13 @@ const Pet = (props) => {
     useEffect(() => {
         // Check if pet is liked by the current user
         const checkLikedStatus = async () => {
-            if (currentUser && currentUser.username) {
+            if (currentUser && currentUser.username && id) {
                 try {
                     const { data } = await axiosReq.get(`/likes/?owner__username=${currentUser.username}&object_id=${id}&content_type__model=pet`);
                     if (data.results.length > 0) {
                         setLiked(true);
                         setLikeId(data.results[0].like_id);
-                      }
+                    }
                 } catch (err) {
                     console.log(err);
                 }
@@ -82,17 +83,36 @@ const Pet = (props) => {
         }
     };
 
-    const fetchPetDetails = async () => {
-        try {
-          const { data } = await axiosReq.get(`/pets/${id}`);
-          if (data) {
-            // Update the likes_count from the server response
-            setLikesCount(data.likes_count);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      };
+    useEffect(() => {
+        const fetchLikesCount = async () => {
+            try {
+                const { data } = await axiosReq.get(`/pets/${id}`);
+                if (data) {
+                    setLikesCount(data.likes_count);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        // Check if pet is liked by the current user
+        const checkLikedStatus = async () => {
+            if (currentUser && currentUser.username && id) { 
+                try {
+                    const { data } = await axiosReq.get(`/likes/?owner__username=${currentUser.username}&object_id=${id}&content_type__model=pet`);
+                    if (data.results.length > 0) {
+                        setLiked(true);
+                        setLikeId(data.results[0].like_id);
+                    }
+                    fetchLikesCount(); 
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+        };
+
+        checkLikedStatus();
+    }, [currentUser, id]);
 
     const handleLike = async () => {
         try {
@@ -100,7 +120,6 @@ const Pet = (props) => {
                 const { data } = await axiosRes.post('/likes/', { object_id: id, content_type: 'pet' });
                 setLiked(true);
                 setLikeId(data.like_id);
-                fetchPetDetails();
             }
         } catch (err) {
             console.log(err);
@@ -113,7 +132,6 @@ const Pet = (props) => {
                 await axiosRes.delete(`/likes/${likeId}`);
                 setLiked(false);
                 setLikeId(null);
-                fetchPetDetails();
             }
         } catch (err) {
             console.log(err);
@@ -176,7 +194,7 @@ const Pet = (props) => {
                     <Link to={`/pets/${id}`}>
                         <i className='far fa-comments' />
                     </Link>
-                    {/* {comments_count} */}
+                    {comments_count}
                 </div>
             </Card.Body>
 
