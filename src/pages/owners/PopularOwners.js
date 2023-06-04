@@ -8,6 +8,10 @@ import Owner from "./Owner";
 const PopularOwners = ({ mobile }) => {
   const { popularOwners } = useOwnerData(); 
 
+  if (!popularOwners) {
+    return <Asset spinner />;
+  }
+
   return (
     <Container
       className={`${appStyles.Content} ${

@@ -7,6 +7,7 @@ import Avatar from "../../components/Avatar";
 import Button from "react-bootstrap/Button";
 import { useSetOwnerData } from "../../contexts/OwnerDataContext";
 
+
 const Owner = (props) => {
   const { profile, mobile, imageSize = 55 } = props;
   const { id, following_id, image, owner } = profile;
