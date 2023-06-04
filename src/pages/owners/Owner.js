@@ -22,7 +22,7 @@ const Owner = (props) => {
       className={`my-3 d-flex align-items-center ${mobile && "flex-column"}`}
     >
       <div>
-        <Link className="align-self-center" to={`/ownera/${id}`}>
+        <Link className="align-self-center" to={`/owners/${id}`}>
           <Avatar src={image} height={imageSize} />
         </Link>
       </div>

@@ -11,7 +11,7 @@ import { axiosReq, axiosRes } from '../../api/axiosDefaults';
 import { MoreDropdown } from '../../components/MoreDropdown';
 
 
-const Pic = (props) => {
+const Tale = (props) => {
 
     const {
         id,
@@ -175,4 +175,4 @@ const Pic = (props) => {
     );
 };
 
-export default Pic
+export default Tale

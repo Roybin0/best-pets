@@ -17,6 +17,7 @@ import TalePage from './pages/tales/TalePage';
 import PetEditForm from './pages/pets/PetEditForm';
 import PicEditForm from './pages/pics/PicEditForm';
 import TaleEditForm from './pages/tales/TaleEditForm';
+import OwnerProfilePage from './pages/owners/OwnerProfilePage';
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
           <Route exact path='/tales/' render={() => <TalesPage />} />
           <Route exact path='/tales/:id' render={() => <TalePage />} />
           <Route exact path='/tales/:id/edit' render={() => <TaleEditForm />} />
+          <Route exact path='/owners/:id' render={() => <OwnerProfilePage />} />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>
       </Container>

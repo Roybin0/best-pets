@@ -100,6 +100,7 @@ function PetsPage({ message, filter = "" }) {
       </Col>
       <Col md={4} className="d-none d-lg-block p-0 p-lg-2">
         <PopularOwners />
+        <br></br>
         <PopularPets />
       </Col>
     </Row>
