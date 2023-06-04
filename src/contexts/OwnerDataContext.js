@@ -37,6 +37,7 @@ export const OwnerDataProvider = ({ children }) => {
           ),
         },
       }));
+      await fetchPopularOwners();
     } catch (err) {
       console.log(err);
     }
@@ -60,6 +61,19 @@ export const OwnerDataProvider = ({ children }) => {
           ),
         },
       }));
+      await fetchPopularOwners();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchPopularOwners = async () => {
+    try {
+      const { data } = await axiosReq.get("/owners/?ordering=-followers_count");
+      setOwnerData((prevState) => ({
+        ...prevState,
+        popularOwners: data,
+      }));
     } catch (err) {
       console.log(err);
     }
@@ -67,19 +81,7 @@ export const OwnerDataProvider = ({ children }) => {
 
   useEffect(() => {
     const handleMount = async () => {
-      try {
-        console.log("Starting API call...")
-        const { data } = await axiosReq.get(
-          "/owners/?ordering=-followers_count"
-        );
-        console.log(`"API Response:" ${data}`)
-        setOwnerData((prevState) => ({
-          ...prevState,
-          popularOwners: data,
-        }));
-      } catch (err) {
-        console.log(err);
-      }
+      await fetchPopularOwners();
     };
 
     handleMount();

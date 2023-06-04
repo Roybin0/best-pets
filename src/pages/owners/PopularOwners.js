@@ -8,10 +8,6 @@ import Owner from "./Owner";
 const PopularOwners = ({ mobile }) => {
   const { popularOwners } = useOwnerData(); 
 
-  if (!popularOwners) {
-    return <Asset spinner />;
-  }
-
   return (
     <Container
       className={`${appStyles.Content} ${
@@ -20,7 +16,7 @@ const PopularOwners = ({ mobile }) => {
     >
       {popularOwners.results.length ? (
         <>
-          <p>Most followed profiles.</p>
+          <p>Most followed Pet Owners:</p>
           {mobile ? (
             <div className="d-flex justify-content-around">
               {popularOwners.results.slice(0, 4).map((owner) => (

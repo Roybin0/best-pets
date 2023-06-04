@@ -6,13 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { CurrentUserProvider } from './contexts/CurrentUserContext';
 import { OwnerDataProvider } from './contexts/OwnerDataContext';
+import { PetDataProvider } from './contexts/PetDataContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <CurrentUserProvider>
         <OwnerDataProvider>
-          <App />
+          <PetDataProvider>
+            <App />
+          </PetDataProvider>
         </OwnerDataProvider>
       </CurrentUserProvider>
     </Router>

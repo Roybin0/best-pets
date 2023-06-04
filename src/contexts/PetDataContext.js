@@ -38,15 +38,15 @@ export const PetDataProvider = ({ children }) => {
         },
       }));
 
-      if (currentUser) {
+      if (currentUser && currentUser?.id) {
         const updatedUser = {
           ...currentUser,
           following_count_pets: currentUser.following_count_pets + 1,
         };
         // Make an API request to update the current user's following_count_pets
-        await axiosRes.patch(`/users/${currentUser.id}/`, updatedUser);
+        await axiosRes.patch(`/users/${currentUser?.owner_id}/`, updatedUser);
       }
-
+      await fetchPopularPets();
     } catch (err) {
       console.log(err);
     }
@@ -71,15 +71,27 @@ export const PetDataProvider = ({ children }) => {
         },
       }));
 
-      if (currentUser) {
+      if (currentUser && currentUser?.id) {
         const updatedUser = {
           ...currentUser,
           following_count_pets: currentUser.following_count_pets - 1,
         };
         // Make an API request to update the current user's following_count_pets
-        await axiosRes.patch(`/users/${currentUser.id}/`, updatedUser);
+        await axiosRes.patch(`/users/${currentUser?.owner_id}/`, updatedUser);
       }
+      await fetchPopularPets();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  const fetchPopularPets = async () => {
+    try {
+      const { data } = await axiosReq.get("/pets/?ordering=-followers_count");
+      setPetData((prevState) => ({
+        ...prevState,
+        popularPets: data,
+      }));
     } catch (err) {
       console.log(err);
     }
@@ -87,17 +99,7 @@ export const PetDataProvider = ({ children }) => {
 
   useEffect(() => {
     const handleMount = async () => {
-      try {
-        const { data } = await axiosReq.get(
-          "/pets/?ordering=-followers_count"
-        );
-        setPetData((prevState) => ({
-          ...prevState,
-          popularPets: data,
-        }));
-      } catch (err) {
-        console.log(err);
-      }
+      await fetchPopularPets();
     };
 
     handleMount();

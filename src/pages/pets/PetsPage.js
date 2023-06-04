@@ -18,6 +18,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
 import PopularOwners from "../owners/PopularOwners";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import PopularPets from "./PopularPets";
 
 function PetsPage({ message, filter = "" }) {
   const [pets, setPets] = useState({ results: [] });
@@ -98,7 +99,8 @@ function PetsPage({ message, filter = "" }) {
         )}
       </Col>
       <Col md={4} className="d-none d-lg-block p-0 p-lg-2">
-        <PopularOwners mobile={false}/>
+        <PopularOwners />
+        <PopularPets />
       </Col>
     </Row>
   );
