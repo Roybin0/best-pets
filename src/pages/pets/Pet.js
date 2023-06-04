@@ -120,6 +120,7 @@ const Pet = (props) => {
                 const { data } = await axiosRes.post('/likes/', { object_id: id, content_type: 'pet' });
                 setLiked(true);
                 setLikeId(data.like_id);
+                setLikesCount(prevCount => prevCount + 1);
             }
         } catch (err) {
             console.log(err);
@@ -132,6 +133,7 @@ const Pet = (props) => {
                 await axiosRes.delete(`/likes/${likeId}`);
                 setLiked(false);
                 setLikeId(null);
+                setLikesCount(prevCount => prevCount - 1);
             }
         } catch (err) {
             console.log(err);

@@ -16,41 +16,56 @@ export const fetchMoreData = async (resource, setResource) => {
   } catch (err) {}
 };
 
-// export const followHelper = (profile, clickedProfile, following_id) => {
-//   return profile.id === clickedProfile.id
-//     ? // This is the profile I clicked on,
-//       // update its followers count and set its following id
-//       {
-//         ...profile,
-//         followers_count: profile.followers_count + 1,
-//         following_id,
-//       }
-//     : profile.is_owner
-//     ? // This is the profile of the logged in user
-//       // update its following count
-//       { ...profile, following_count: profile.following_count + 1 }
-//     : // this is not the profile the user clicked on or the profile
-//       // the user owns, so just return it unchanged
-//       profile;
-// };
+export const followOwnerHelper = (owner, clickedOwner, following_id) => {
+  return owner.id === clickedOwner.id
+    ? // Clicked profile > update followers count and following id
+      {
+        ...owner,
+        followers_count: owner.followers_count + 1,
+        following_id,
+      }
+    : owner.is_owner
+    ? // Logged in user > update following count
+      { ...owner, following_count_owners: owner.following_count_owners + 1 }
+    : owner;
+};
 
-// export const unfollowHelper = (profile, clickedProfile) => {
-//   return profile.id === clickedProfile.id
-//     ? // This is the profile I clicked on,
-//       // update its followers count and set its following id
-//       {
-//         ...profile,
-//         followers_count: profile.followers_count - 1,
-//         following_id: null,
-//       }
-//     : profile.is_owner
-//     ? // This is the profile of the logged in user
-//       // update its following count
-//       { ...profile, following_count: profile.following_count - 1 }
-//     : // this is not the profile the user clicked on or the profile
-//       // the user owns, so just return it unchanged
-//       profile;
-// };
+export const unfollowOwnerHelper = (owner, clickedOwner) => {
+  return owner.id === clickedOwner.id
+    ? // Clicked profile > update followers count and following id
+      {
+        ...owner,
+        followers_count: owner.followers_count - 1,
+        following_id: null,
+      }
+    : owner.is_owner
+    ? // Logged in user > update following count
+      { ...owner, following_count_owners: owner.following_count_owners - 1 }
+    : owner;
+};
+
+export const followPetHelper = (pet, clickedPet, following_id) => {
+  return pet.id === clickedPet.id
+    ? // Clicked pet > update followers count and following id
+      {
+        ...pet,
+        followers_count: pet.followers_count + 1,
+        following_id,
+      }
+    : pet;
+};
+
+
+export const unfollowPetHelper = (pet, clickedProfile) => {
+  return pet.id === clickedProfile.id
+    ? // Clicked pet > update followers count and following id
+      {
+        ...pet,
+        followers_count: pet.followers_count - 1,
+        following_id: null,
+      }
+    : pet;
+};
 
 export const setTokenTimestamp = (data) => {
   const refreshTokenTimestamp = jwtDecode(data?.refresh_token).exp;
