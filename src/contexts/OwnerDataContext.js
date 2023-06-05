@@ -27,13 +27,17 @@ export const OwnerDataProvider = ({ children }) => {
         ...prevState,
         pageOwner: {
           results: prevState.pageOwner.results.map((owner) =>
-            followOwnerHelper(owner, clickedOwner, data.id)
+            owner.id === clickedOwner.id
+              ? followOwnerHelper(owner, clickedOwner, data.id)
+              : owner
           ),
         },
         popularOwners: {
           ...prevState.popularOwners,
           results: prevState.popularOwners.results.map((owner) =>
-            followOwnerHelper(owner, clickedOwner, data.id)
+            owner.id === clickedOwner.id
+              ? followOwnerHelper(owner, clickedOwner, data.id)
+              : owner
           ),
         },
       }));
@@ -51,13 +55,17 @@ export const OwnerDataProvider = ({ children }) => {
         ...prevState,
         pageOwner: {
           results: prevState.pageOwner.results.map((owner) =>
-            unfollowOwnerHelper(owner, clickedOwner)
+            owner.id === clickedOwner.id
+              ? unfollowOwnerHelper(owner, clickedOwner)
+              : owner
           ),
         },
         popularOwners: {
           ...prevState.popularOwners,
           results: prevState.popularOwners.results.map((owner) =>
-            unfollowOwnerHelper(owner, clickedOwner)
+            owner.id === clickedOwner.id
+              ? unfollowOwnerHelper(owner, clickedOwner)
+              : owner
           ),
         },
       }));

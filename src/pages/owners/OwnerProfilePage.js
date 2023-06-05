@@ -22,18 +22,19 @@ import {
 } from "../../contexts/OwnerDataContext";
 
 import InfiniteScroll from "react-infinite-scroll-component";
-import Pet from "../pets/Pet";
 import Tale from "../tales/Tale"
 import Pic from "../pics/Pic"
 import { fetchMoreData } from "../../utils/utils";
 import NoResults from "../../assets/noresultsfound.jpeg";
 import { ProfileEditDropdown } from "../../components/MoreDropdown";
+import OwnerProfilePet from "./OwnerProfilePet";
 
 function OwnerProfilePage() {
     const [hasLoaded, setHasLoaded] = useState(false);
     const [ownerPets, setOwnerPets] = useState({ results: [] });
     const [ownerTales, setOwnerTales] = useState({ results: [] });
     const [ownerPics, setOwnerPics] = useState({ results: [] });
+    const [activeOption, setActiveOption] = useState("pets");
 
     const currentUser = useCurrentUser();
     const { id } = useParams();
@@ -58,7 +59,7 @@ function OwnerProfilePage() {
                     ...prevState,
                     pageOwner: { results: [pageOwner] },
                 }));
-                setOwnerPets(ownerPets);
+                setOwnerPets((ownerPets));
                 setOwnerPics(ownerPics);
                 setOwnerTales(ownerTales);
                 setHasLoaded(true);
@@ -69,11 +70,8 @@ function OwnerProfilePage() {
         fetchData();
     }, [id, setOwnerData]);
 
-    console.log(owner)
-
     const mainProfile = (
         <>
-            {owner?.is_owner && <ProfileEditDropdown id={owner?.id} />}
             <Row noGutters className="px-3 text-center">
                 <Col lg={3} className="text-lg-left">
                     <Image
@@ -87,25 +85,27 @@ function OwnerProfilePage() {
                     <Row className="justify-content-center no-gutters">
                         <Col xs={3} className="my-2">
                             <div>{owner?.pets_count}</div>
-                            <div>pets</div>
+                            <div>{owner?.pets_count === 1 ? 'pet' : 'pets'}</div>
                         </Col>
                         <Col xs={3} className="my-2">
                             <div>{owner?.followers_count}</div>
-                            <div>followers</div>
+                            <div>{owner?.followers_count === 1 ? 'follower' : 'followers'}</div>
                         </Col>
                         <Col xs={3} className="my-2">
                             <div>following</div>
                             <div>{owner?.following_count_owners}</div>
-                            <div>owners</div>
+                            <div>{owner?.following_count_owners === 1 ? 'owner' : 'owners'}</div>
                         </Col>
                         <Col xs={3} className="my-2">
                             <div>following</div>
                             <div>{owner?.following_count_pets}</div>
-                            <div>pets</div>
+                            <div>{owner?.following_count_pets === 1 ? 'pet' : 'pets'}</div>
                         </Col>
                     </Row>
                 </Col>
+
                 <Col lg={3} className="text-lg-right">
+                    {owner?.is_owner && <ProfileEditDropdown id={owner?.id} />}
                     {currentUser &&
                         !is_owner &&
                         (owner?.following_id ? (
@@ -124,7 +124,7 @@ function OwnerProfilePage() {
                             </Button>
                         ))}
                 </Col>
-                {owner?.content && <Col className="p-3">{owner.content}</Col>}
+                {owner?.about && <Col className="p-3">{owner.about}</Col>}
             </Row>
         </>
     );
@@ -132,24 +132,24 @@ function OwnerProfilePage() {
     const mainOwnerPets = (
         <>
             <hr />
-            <p className="text-center">{owner?.owner}'s Pets</p>
+            <Row>
+                <Col>
+                    <p className="text-center">{owner?.owner}'s Pets</p>
+                </Col>
+                {ownerPets.results.length ? (
+                    ownerPets.results.map((pet) => (
+                        <Col key={pet.id}>
+                            <OwnerProfilePet rowkey={pet.id} profile={pet} />
+                        </Col>
+                    ))
+                ) : (
+                    <Asset
+                        src={NoResults}
+                        message={`No results found, ${owner?.owner} hasn't added any pets yet.`}
+                    />
+                )}
+            </Row>
             <hr />
-            {ownerPets.results.length ? (
-                <InfiniteScroll
-                    children={ownerPets.results.map((pet) => (
-                        <Pet key={pet.id} {...pet} setPets={setOwnerPets} />
-                    ))}
-                    dataLength={ownerPets.results.length}
-                    loader={<Asset spinner />}
-                    hasMore={!!ownerPets.next}
-                    next={() => fetchMoreData(ownerPets, setOwnerPets)}
-                />
-            ) : (
-                <Asset
-                    src={NoResults}
-                    message={`No results found, ${owner?.owner} hasn't added any pets yet.`}
-                />
-            )}
         </>
     )
 
@@ -201,6 +201,35 @@ function OwnerProfilePage() {
         </>
     );
 
+    const handleOptionClick = (option) => {
+        setActiveOption(option);
+    };
+
+    const renderActiveContent = () => {
+        switch (activeOption) {
+            case "pets":
+                return (
+                    <>
+                        {mainOwnerPets}
+                    </>
+                );
+            case "pics":
+                return (
+                    <>
+                        {mainOwnerPics}
+                    </>
+                );
+            case "tales":
+                return (
+                    <>
+                        {mainOwnerTales}
+                    </>
+                );
+            default:
+                return null;
+        }
+    };
+
     return (
         <Row>
             <Col className="py-2 p-0 p-lg-2" lg={8}>
@@ -209,9 +238,30 @@ function OwnerProfilePage() {
                     {hasLoaded ? (
                         <>
                             {mainProfile}
-                            {mainOwnerPets}
-                            {mainOwnerPics}
-                            {mainOwnerTales}
+                            <div className={styles.OwnerStats}>
+                                <Button
+                                    className={`${styles.OwnerStatsButton} ${activeOption === "pets" && styles.ActiveOption
+                                        }`}
+                                    onClick={() => handleOptionClick("pets")}
+                                >
+                                    Pets
+                                </Button>
+                                <Button
+                                    className={`${styles.OwnerStatsButton} ${activeOption === "pics" && styles.ActiveOption
+                                        }`}
+                                    onClick={() => handleOptionClick("pics")}
+                                >
+                                    Pet Pics
+                                </Button>
+                                <Button
+                                    className={`${styles.OwnerStatsButton} ${activeOption === "tales" && styles.ActiveOption
+                                        }`}
+                                    onClick={() => handleOptionClick("tales")}
+                                >
+                                    Pet Tales
+                                </Button>
+                            </div>
+                            {renderActiveContent()}
                         </>
                     ) : (
                         <Asset spinner />
