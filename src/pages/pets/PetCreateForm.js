@@ -13,9 +13,10 @@ import btnStyles from "../../styles/Button.module.css";
 import { useHistory } from "react-router-dom";
 import { axiosReq } from "../../api/axiosDefaults";
 import Asset from "../../components/Asset";
+import { useRedirect } from "../../hooks/useRedirect";
 
 function PetCreateForm() {
-
+    useRedirect('loggedOut');
     const [petData, setPetData] = useState({
         name: "",
         pet_type: "",

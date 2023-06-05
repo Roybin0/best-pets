@@ -14,9 +14,10 @@ import { useHistory } from "react-router-dom";
 import { axiosReq } from "../../api/axiosDefaults";
 import Asset from "../../components/Asset";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import { useRedirect } from "../../hooks/useRedirect";
 
 function TaleCreateForm() {
-
+    useRedirect('loggedOut');
     const [taleData, setTaleData] = useState({
         pet: "",
         image: "",
