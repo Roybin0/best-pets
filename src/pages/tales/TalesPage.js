@@ -34,7 +34,7 @@ function TalesPage({ message, filter = "" }) {
         setTales(data);
         setHasLoaded(true);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
