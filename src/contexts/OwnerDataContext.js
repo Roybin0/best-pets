@@ -43,7 +43,7 @@ export const OwnerDataProvider = ({ children }) => {
       }));
       await fetchPopularOwners();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -71,7 +71,7 @@ export const OwnerDataProvider = ({ children }) => {
       }));
       await fetchPopularOwners();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -83,7 +83,7 @@ export const OwnerDataProvider = ({ children }) => {
         popularOwners: data,
       }));
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

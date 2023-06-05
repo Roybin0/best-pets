@@ -21,6 +21,7 @@ import OwnerProfilePage from './pages/owners/OwnerProfilePage';
 import OwnerProfileEditForm from './pages/owners/OwnerProfileEditForm';
 import OwnerPasswordForm from './pages/owners/OwnerPasswordForm';
 import OwnerUsernameForm from './pages/owners/OwnerUsernameForm';
+import NotFound from './components/NotFound';
 
 
 function App() {
@@ -49,7 +50,7 @@ function App() {
           <Route exact path='/owners/:id/edit' render={() => <OwnerProfileEditForm />} />
           <Route exact path="/owners/:id/edit/password" render={() => <OwnerPasswordForm />} />
           <Route exact path="/owners/:id/edit/username" render={() => <OwnerUsernameForm />} />
-          <Route render={() => <p>Page not found!</p>} />
+          <Route render={() => <NotFound />} />
         </Switch>
       </Container>
     </div>
