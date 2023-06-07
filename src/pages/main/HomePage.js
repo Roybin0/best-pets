@@ -11,6 +11,7 @@ import appStyles from "../../App.module.css";
 import styles from "../../styles/HomeLikedPage.module.css";
 import Asset from "../../components/Asset";
 import { fetchMoreData } from "../../utils/utils";
+import Footer from "../../components/Footer";
 
 const HomePage = () => {
   const [pets, setPets] = useState({ results: [] });
@@ -62,7 +63,7 @@ const HomePage = () => {
   };
 
   return (
-    <div style={{ height: "100%" }}>
+    <div>
       {isLoading ? (
         <Container className={appStyles.Content}>
           <Asset spinner />
@@ -96,8 +97,8 @@ const HomePage = () => {
           </div>
 
           <Row>
-            <Col md={6}>
-              <div className={appStyles.TextCenter} id="pics-top">
+            <Col md={6} className="mb-4 mb-md-0">
+              <div className={`${appStyles.TextCenter} ${styles.Border}`} id="pics-top">
                 <h2>Pics</h2>
                 <Container fluid>
                   <InfiniteScroll
@@ -129,9 +130,11 @@ const HomePage = () => {
                 </Container>
               </div>
             </Col>
+            
+            
 
             <Col md={6}>
-              <div className={appStyles.TextCenter} id="tales-top">
+              <div className={`${appStyles.TextCenter} ${styles.Border}`} id="tales-top">
                 <h2>Tales</h2>
                 <Container fluid>
                   <InfiniteScroll
@@ -167,7 +170,7 @@ const HomePage = () => {
 
           <Row>
             <Col>
-              
+              <Footer />
             </Col>
           </Row>
         </>
