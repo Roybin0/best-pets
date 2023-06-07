@@ -108,7 +108,7 @@ const Pic = (props) => {
     };
 
     return (
-        <Card className={styles.Pet}>
+        <Card className={styles.Pic}>
 
             <Card.Body>
                 <Media className='align-items-center justify-content-between'>

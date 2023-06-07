@@ -6,6 +6,7 @@ import Pic from '../pics/Pic';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Container from 'react-bootstrap/Container';
 import appStyles from '../../App.module.css';
+import styles from '../../styles/HomeLikedPage.module.css';
 import Asset from '../../components/Asset';
 
 const HomePageSorted = () => {

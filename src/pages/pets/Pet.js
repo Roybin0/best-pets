@@ -9,7 +9,7 @@ import { Link, useHistory } from 'react-router-dom';
 import Avatar from '../../components/Avatar';
 import { axiosReq, axiosRes } from '../../api/axiosDefaults';
 import { MoreDropdown } from '../../components/MoreDropdown';
-
+ 
 
 const Pet = (props) => {
 

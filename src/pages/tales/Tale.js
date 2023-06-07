@@ -111,7 +111,7 @@ const Tale = (props) => {
     };
 
     return (
-        <Card className={styles.Pet}>
+        <Card className={styles.Tale}>
 
             <Card.Body>
                 <Media className='align-items-center justify-content-between'>
