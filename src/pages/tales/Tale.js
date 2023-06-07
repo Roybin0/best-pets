@@ -45,7 +45,7 @@ const Tale = (props) => {
         const checkLikedStatus = async () => {
             if (currentUser && currentUser.username && id) {
                 try {
-                    const { data } = await axiosReq.get(`/likes/?owner__username=${currentUser.username}&object_id=${id}&content_type__model=pettale`);
+                    const { data } = await axiosReq.get(`/likes/?owner__username=${currentUser?.username}&object_id=${id}&content_type__model=pettale`);
                     if (data.results.length > 0) {
                         setLiked(true);
                         setLikeId(data.results[0].like_id);

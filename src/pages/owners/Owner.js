@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/Owner.module.css";
+import styles from "../../styles/PopularOwnerPet.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
@@ -29,7 +29,7 @@ const Owner = (props) => {
       <div className={`mx-2 ${styles.WordBreak}`}>
         <strong>{owner}</strong>
       </div>
-      <div className={`text-right ${!mobile && "ml-auto"}`}>
+      <div className={`${styles.AlignRight} ${!mobile && "ml-auto"}`}>
         {!mobile &&
           currentUser &&
           !is_owner &&

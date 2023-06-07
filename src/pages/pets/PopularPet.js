@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/PopularPet.module.css";
+import styles from "../../styles/PopularOwnerPet.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import { useSetPetData } from "../../contexts/PetDataContext";
 
 
 const PopularPet = (props) => {
-  const { profile, mobile, imageSize = 55, stacked } = props;
+  const { profile, mobile, imageSize = 55 } = props;
   const { id, following_id, image, name, owner } = profile;
 
   const currentUser = useCurrentUser();

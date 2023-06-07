@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { axiosReq } from "../../api/axiosDefaults";
 import PopularPet from "../pets/PopularPet";
 import Tale from "../tales/Tale";
@@ -13,15 +13,10 @@ import Asset from "../../components/Asset";
 import { fetchMoreData } from "../../utils/utils";
 
 const HomePage = () => {
-  // const [combinedData, setCombinedData] = useState({ results: [] });
   const [pets, setPets] = useState({ results: [] });
   const [pics, setPics] = useState({ results: [] });
   const [tales, setTales] = useState({ results: [] });
-  const [hasMorePets, setHasMorePets] = useState(true);
-  const [hasMorePics, setHasMorePics] = useState(true);
-  const [hasMoreTales, setHasMoreTales] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  // const [page, setPage] = useState(1);
 
   useEffect(() => {
     setIsLoading(true);
@@ -33,13 +28,9 @@ const HomePage = () => {
           axiosReq.get("/petpics/?ordering=-created_at"),
           axiosReq.get("/pettales/?ordering=-created_at"),
         ]);
-
         setPets(petsData.data);
         setPics(picsData.data);
         setTales(talesData.data);
-        setHasMorePets(!!petsData.data.next);
-        setHasMorePics(!!picsData.data.next);
-        setHasMoreTales(!!talesData.data.next);
       } catch (err) {
         console.log("Fetch inital data error:", err);
       }
@@ -53,107 +44,50 @@ const HomePage = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [hasMorePics, hasMorePets, hasMoreTales]);
+  }, []);
 
-  // const fetchData = useCallback(async () => {
-  //     if (isLoading) {
-  //         return;
-  //     }
+  // For generating unique keys for Pic components
+  const generatePicKey = (pic, index) => `${pic.pic_id}_${index}`;
 
-  //     setIsLoading(true);
+  // For generating unique keys for Tale components
+  const generateTaleKey = (tale, index) => `${tale.tale_id}_${index}`;
 
-  //     try {
-  //         let newData = [];
-
-  //         // Fetch pets data if hasMorePets is true
-  //         if (hasMorePets) {
-  //             const pets = await axiosReq.get(`/pets?page=${page}`)
-  //             if (pets && pets.data && pets.data.results) {
-  //                 // Add 'type' property to each pet object for rendering
-  //                 const petsWithTypes = pets.data.results.map((pet) => ({ ...pet, type: 'Pet' }));
-  //                 newData = [...newData, ...petsWithTypes];
-  //                 setHasMorePets(!!pets.data.next);
-  //             } else if (pets && pets.error) {
-  //                 console.log('Error in pets request:', pets.error.message);
-  //                 setHasMorePets(false);
-  //             }
-  //         }
-
-  //         // Fetch pics data if hasMorePics is true
-  //         if (hasMorePics) {
-  //             const pics = await axiosReq.get(`/petpics?page=${page}`).catch(handleError);
-  //             if (pics && pics.data && pics.data.results) {
-  //                 // Add 'type' property to each pic object for rendering
-  //                 const picsWithTypes = pics.data.results.map((pic) => ({ ...pic, type: 'Pic' }));
-  //                 newData = [...newData, ...picsWithTypes];
-  //                 setHasMorePics(!!pics.data.next);
-  //             } else if (pics && pics.error) {
-  //                 console.log('Error in pics request:', pics.error.message);
-  //                 setHasMorePics(false);
-  //             }
-  //         }
-
-  //         // Fetch tales data if hasMoreTales is true
-  //         if (hasMoreTales) {
-  //             const tales = await axiosReq.get(`/pettales?page=${page}`).catch(handleError);
-  //             if (tales && tales.data && tales.data.results) {
-  //                 // Add 'type' property to each tale object for rendering
-  //                 const talesWithTypes = tales.data.results.map((tale) => ({ ...tale, type: 'Tale' }));
-  //                 newData = [...newData, ...talesWithTypes];
-  //                 setHasMoreTales(!!tales.data.next);
-  //             } else if (tales && tales.error) {
-  //                 console.log('Error in tales request:', tales.error.message);
-  //                 setHasMoreTales(false);
-  //             }
-  //         }
-
-  //         //  Sort new data by timestamp
-  //         newData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-  //         setCombinedData((prevData) => [...prevData, ...newData]);
-  //         setPage((prevPage) => prevPage + 1);
-  //     } catch (err) {
-  //         console.log('Error in fetchData:', err.message);
-  //     } finally {
-  //         setIsLoading(false);
-  //     }
-  // }, [isLoading, page, hasMorePets, hasMorePics, hasMoreTales]);
-
-  // useEffect(() => {
-  //     fetchData();
-  // }, []);
-
-  // const loadMoreData = () => {
-  //     fetchData();
-  // };
-
-  // // Add a useEffect to log the combinedData whenever it changes
-  // useEffect(() => {
-  //     console.log('combinedData:', combinedData);
-  // }, [combinedData]);
+  const scrollToTop = (event, targetId) => {
+    event.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    const firstChild = targetElement.querySelector(".g-4 > :first-child");
+    if (firstChild) {
+      firstChild.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
-    <div style={{ height: "100%", overflow: "auto" }}>
+    <div style={{ height: "100%" }}>
       {isLoading ? (
         <Container className={appStyles.Content}>
           <Asset spinner />
         </Container>
       ) : (
         <>
-          <div>
+          <div className={appStyles.TextCenter}>
             <h2>Pets</h2>
             <Container fluid>
               <InfiniteScroll
                 className={styles.PetsContainer}
                 dataLength={pets.results.length}
                 next={() => fetchMoreData(pets, setPets)}
-                hasMore={hasMorePets}
+                hasMore={!!pets.next}
                 loader={<Asset spinner />}
               >
-                <Row xs={4} md={6} lg={9} className="g-4">
+                <Row
+                  xs={4}
+                  md={6}
+                  lg={9}
+                  className="g-4 justify-content-between"
+                >
                   {pets.results.map((pet) => (
                     <Col key={pet.id}>
-                      <PopularPet profile={pet} mobile />
+                      <PopularPet key={pet.id} profile={pet} mobile />
                     </Col>
                   ))}
                 </Row>
@@ -163,46 +97,77 @@ const HomePage = () => {
 
           <Row>
             <Col md={6}>
-              <div>
+              <div className={appStyles.TextCenter} id="pics-top">
                 <h2>Pics</h2>
                 <Container fluid>
                   <InfiniteScroll
+                    className={styles.ContentContainer}
                     dataLength={pics.results.length}
                     next={() => fetchMoreData(pics, setPics)}
-                    hasMore={hasMorePics}
+                    hasMore={!!pics.next}
                     loader={<Asset spinner />}
                   >
                     <Row xs={1} className="g-4">
-                      {pics.results.map((pic) => (
-                        <Col key={pic.pic_id}>
+                      {pics.results.map((pic, index) => (
+                        <Col key={generatePicKey(pic, index)}>
                           <Pic {...pic} />
                         </Col>
                       ))}
+                      {!pics.next && (
+                        <div className={styles.EndMessage}>
+                          <p>You've reached the end</p>
+                          <a
+                            href="#pics-top"
+                            onClick={(event) => scrollToTop(event, "pics-top")}
+                          >
+                            Back to top
+                          </a>
+                        </div>
+                      )}
                     </Row>
                   </InfiniteScroll>
                 </Container>
               </div>
             </Col>
+
             <Col md={6}>
-              <div>
+              <div className={appStyles.TextCenter} id="tales-top">
                 <h2>Tales</h2>
                 <Container fluid>
                   <InfiniteScroll
+                    className={styles.ContentContainer}
                     dataLength={tales.results.length}
                     next={() => fetchMoreData(tales, setTales)}
-                    hasMore={hasMoreTales}
+                    hasMore={!!tales.next}
                     loader={<Asset spinner />}
                   >
                     <Row xs={1} className="g-4">
-                      {tales.results.map((tale) => (
-                        <Col key={tale.tale_id}>
+                      {tales.results.map((tale, index) => (
+                        <Col key={generateTaleKey(tale, index)}>
                           <Tale {...tale} />
                         </Col>
                       ))}
+                      {!tales.next && (
+                        <div className={styles.EndMessage}>
+                          <p>You've reached the end</p>
+                          <a
+                            href="#tales-top"
+                            onClick={(event) => scrollToTop(event, "tales-top")}
+                          >
+                            Back to top
+                          </a>
+                        </div>
+                      )}
                     </Row>
                   </InfiniteScroll>
                 </Container>
               </div>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              
             </Col>
           </Row>
         </>
