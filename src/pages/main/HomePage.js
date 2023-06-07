@@ -116,7 +116,7 @@ const HomePage = () => {
                       ))}
                       {!pics.next && (
                         <div className={styles.EndMessage}>
-                          <p>You've reached the end</p>
+                          <p>No more pics!</p>
                           <a
                             href="#pics-top"
                             onClick={(event) => scrollToTop(event, "pics-top")}
@@ -152,7 +152,7 @@ const HomePage = () => {
                       ))}
                       {!tales.next && (
                         <div className={styles.EndMessage}>
-                          <p>You've reached the end</p>
+                          <p>No more tales!</p>
                           <a
                             href="#tales-top"
                             onClick={(event) => scrollToTop(event, "tales-top")}
