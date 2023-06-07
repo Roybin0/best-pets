@@ -1,3 +1,39 @@
-.Content {
-    margin-bottom: 16px;
+.HorizontalScrollContainer,
+.VerticalScrollContainer {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    /* Hide the scrollbars */
+    -ms-overflow-style: none;
+    /* Hide the scrollbars for IE/Edge */
+}
+
+.HorizontalScrollContainer::-webkit-scrollbar,
+.VerticalScrollContainer::-webkit-scrollbar {
+    display: none;
+    /* Hide the scrollbars for Chrome/Safari */
+}
+
+.HorizontalScrollContainer::-webkit-scrollbar-thumb,
+.VerticalScrollContainer::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    /* Set the color of the scrollbar thumb */
+}
+
+.HorizontalScrollContainer::-webkit-scrollbar-track,
+.VerticalScrollContainer::-webkit-scrollbar-track {
+    background-color: transparent;
+    /* Set the color of the scrollbar track */
+}
+
+.HorizontalScrollContainer>*,
+.VerticalScrollContainer>* {
+    scroll-snap-align: start;
+}
+
+.PetsContainer {
+    display: flex;
+    flex-wrap: wrap;
 }

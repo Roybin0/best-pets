@@ -40,9 +40,9 @@ const Pic = (props) => {
     useEffect(() => {
         // Check if petpic is liked by the current user
         const checkLikedStatus = async () => {
-            if (currentUser && currentUser.username) {
+            if (currentUser && currentUser?.username) {
                 try {
-                    const { data } = await axiosReq.get(`/likes/?owner__username=${currentUser.username}&object_id=${id}&content_type__model=petpic`);
+                    const { data } = await axiosReq.get(`/likes/?owner__username=${currentUser?.username}&object_id=${id}&content_type__model=petpic`);
                     if (data.results.length > 0) {
                         setLiked(true);
                         setLikeId(data.results[0].like_id);
@@ -143,7 +143,7 @@ const Pic = (props) => {
                 {description && <Card.Text>{description}</Card.Text>}
                 <div className={styles.PetBar}>
                     {is_owner ? (
-                        <OverlayTrigger placement='top' overlay={<Tooltip>You can't like your own pet!</Tooltip>}>
+                        <OverlayTrigger placement='top' overlay={<Tooltip>You can't like your own pic!</Tooltip>}>
                             <i className='far fa-heart' />
                         </OverlayTrigger>
                     ) : likeId ? (

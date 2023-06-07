@@ -9,7 +9,7 @@ import { useSetPetData } from "../../contexts/PetDataContext";
 
 
 const PopularPet = (props) => {
-  const { profile, mobile, imageSize = 55 } = props;
+  const { profile, mobile, imageSize = 55, stacked } = props;
   const { id, following_id, image, name, owner } = profile;
 
   const currentUser = useCurrentUser();
@@ -29,7 +29,7 @@ const PopularPet = (props) => {
       <div className={`mx-2 ${styles.WordBreak}`}>
         <strong>{name}</strong>
       </div>
-      <div className={`text-right ${!mobile && "ml-auto"}`}>
+      <div className={`${styles.AlignRight} ${!mobile && "ml-auto"}`}>
         {!mobile &&
           currentUser &&
           !is_owner &&

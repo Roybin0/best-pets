@@ -14,14 +14,15 @@ import appStyles from "../../App.module.css";
 import styles from "../../styles/HomeLikedPage.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
+import { useRedirect } from "../../hooks/useRedirect";
 
-const LikedPageSorted = ({ message, filter = "" }) => {
+const LikedPageSorted = () => {
+  useRedirect("loggedOut");
   const [isLoading, setIsLoading] = useState(true);
   const [likedPets, setLikedPets] = useState({ results: [] });
   const [likedData, setLikedData] = useState({ results: [] });
-  const [isCurrentUserLoaded, setIsCurrentUserLoaded] = useState(false);
   const [page, setPage] = useState(1);
-//   const [hasMorePets, setHasMorePets] = useState(true);
+  //   const [hasMorePets, setHasMorePets] = useState(true);
   const [hasMorePics, setHasMorePics] = useState(true);
   const [hasMoreTales, setHasMoreTales] = useState(true);
   const currentUser = useCurrentUser();
@@ -42,15 +43,14 @@ const LikedPageSorted = ({ message, filter = "" }) => {
     };
 
     const timer = setTimeout(() => {
-        setIsCurrentUserLoaded(!!currentUser);
-        setIsLoading(false);
-        fetchPetData();
-      }, 1000);
-  
-      return () => {
-        clearTimeout(timer);
-      };
+      // setIsCurrentUserLoaded(!!currentUser);
+      setIsLoading(false);
+      fetchPetData();
+    }, 1000);
 
+    return () => {
+      clearTimeout(timer);
+    };
   }, [currentUser, id]);
 
   useEffect(() => {
@@ -61,74 +61,74 @@ const LikedPageSorted = ({ message, filter = "" }) => {
 
         // Fetch pics data if hasMorePics is true
         if (hasMorePics) {
-            try {
-                const pics = await axiosReq.get(`/petpics/?likes__owner=${id}&ordering=-likes__created_at&page=${page}`)
-                if (pics) {
-                    // Add 'type' property to each pic object for rendering
-                    const picsWithTypes = pics.data.results.map((pic, index) => ({
-                        ...pic,
-                        type: 'Pic',
-                        id: `pic${index + 1}`
-                      }));
-                    newData.results.push(...picsWithTypes); 
-                    setHasMorePics(!!pics.data.next);
-                    setPage((prevPage) => prevPage + 1);
-                } else if (pics && pics.error) {
-                    console.log('Error in pics request:', pics.error.message);
-                    setHasMorePics(false);
+          try {
+            const pics = await axiosReq.get(
+              `/petpics/?likes__owner=${id}&ordering=-likes__created_at&page=${page}`
+            );
+            if (pics) {
+              // Add 'type' property to each pic object for rendering
+              const picsWithTypes = pics.data.results.map((pic, index) => ({
+                ...pic,
+                type: "Pic",
+                pic_id: `pic${index + 1}`,
+              }));
+              newData.results.push(...picsWithTypes);
+              setHasMorePics(!!pics.data.next);
+              setPage((prevPage) => prevPage + 1);
+            } else if (pics && pics.error) {
+              console.log("Error in pics request:", pics.error.message);
+              setHasMorePics(false);
             }
-            } catch (err) {
-                console.log("Error fetching pics:", err)
-            }
-            
+          } catch (err) {
+            console.log("Error fetching pics:", err);
+          }
         }
 
         // Fetch tales data if hasMoreTales is true
         if (hasMoreTales) {
-            try {
-                const tales = await axiosReq.get(`/pettales/?likes__owner=${id}&ordering=-likes__created_at&page=${page}`)
-                if (tales) {
-                    // Add 'type' property to each tale object for rendering
-                    const talesWithTypes = tales.data.results.map((tale, index) => ({
-                        ...tale,
-                        type: 'Tale',
-                        id: `tale${index + 1}`
-                      }));
-                    newData.results.push(...talesWithTypes); 
-                    setHasMoreTales(!!tales.data.next);
-                    setPage((prevPage) => prevPage + 1);
-                } else if (tales && tales.error) {
-                    console.log('Error in tales request:', tales.error.message);
-                    setHasMoreTales(false);
+          try {
+            const tales = await axiosReq.get(
+              `/pettales/?likes__owner=${id}&ordering=-likes__created_at&page=${page}`
+            );
+            if (tales) {
+              // Add 'type' property to each tale object for rendering
+              const talesWithTypes = tales.data.results.map((tale, index) => ({
+                ...tale,
+                type: "Tale",
+                tale_id: `tale${index + 1}`,
+              }));
+              newData.results.push(...talesWithTypes);
+              setHasMoreTales(!!tales.data.next);
+              setPage((prevPage) => prevPage + 1);
+            } else if (tales && tales.error) {
+              console.log("Error in tales request:", tales.error.message);
+              setHasMoreTales(false);
             }
-            } catch (err) {
-                console.log("Error fetching tales:", err)
-            }
-            
+          } catch (err) {
+            console.log("Error fetching tales:", err);
+          }
         }
-        
-        console.log("newData:", newData)
+
         //  Sort by most recent
-        newData.results.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-        
+        newData.results.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
+
         setLikedData(newData);
-        console.log("newData:", newData);
       } catch (err) {
         console.log(err);
       }
     };
 
     const timer = setTimeout(() => {
-        fetchLikedContent();
-      }, 1000);
-  
-      return () => {
-        clearTimeout(timer);
-      };
+      fetchLikedContent();
+    }, 1000);
 
+    return () => {
+      clearTimeout(timer);
+    };
   }, [id, page, hasMorePics, hasMoreTales]);
 
- 
   return (
     <>
       <Row className="h-100">
@@ -176,25 +176,21 @@ const LikedPageSorted = ({ message, filter = "" }) => {
                 <Asset spinner />
               </Container>
             ) : likedData.results ? (
-                <InfiniteScroll
-                    children={likedData.results.map((item) => {
-                        if (item.type === 'Pic') {
-                        return (
-                            <Pic key={item.id} {...item} />
-                        );
-                        } else if (item.type === 'Tale') {
-                        return (
-                            <Tale key={item.id} {...item} />
-                        );
-                        } else {
-                        return null;
-                        }
-                    })}
-                    dataLength={likedData.results.length}
-                    loader={<Asset spinner />}
-                    hasMore={hasMorePics || hasMoreTales}
-                    next={() => fetchMoreData(likedData, setLikedData)}
-                />
+              <InfiniteScroll
+                children={likedData.results.map((item) => {
+                  if (item.type === "Pic") {
+                    return <Pic key={item.pic_id} {...item} />;
+                  } else if (item.type === "Tale") {
+                    return <Tale key={item.tale_id} {...item} />;
+                  } else {
+                    return null;
+                  }
+                })}
+                dataLength={likedData.results.length}
+                loader={<Asset spinner />}
+                hasMore={hasMorePics || hasMoreTales}
+                next={() => fetchMoreData(likedData, setLikedData)}
+              />
             ) : (
               <Container className={appStyles.Content}>
                 <Asset

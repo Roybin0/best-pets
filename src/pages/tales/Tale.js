@@ -43,7 +43,7 @@ const Tale = (props) => {
     useEffect(() => {
         // Check if pettale is liked by the current user
         const checkLikedStatus = async () => {
-            if (currentUser && currentUser.username) {
+            if (currentUser && currentUser.username && id) {
                 try {
                     const { data } = await axiosReq.get(`/likes/?owner__username=${currentUser.username}&object_id=${id}&content_type__model=pettale`);
                     if (data.results.length > 0) {

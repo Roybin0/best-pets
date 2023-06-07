@@ -2,20 +2,6 @@
     word-break: break-all;
 }
 
-.HorizontalScrollContainer {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    scrollbar-width: none; /* Hide the scrollbars */
-    -ms-overflow-style: none; /* Hide the scrollbars for IE/Edge */
-  }
-  
-  .HorizontalScrollContainer::-webkit-scrollbar {
-    display: none; /* Hide the scrollbars for Chrome/Safari */
-  }
-  
-  /* Optionally, you can add additional styling for the children elements */
-  .HorizontalScrollContainer > * {
-    scroll-snap-align: start;
-  }
+.AlignRight {
+    margin-left: auto;
+}
