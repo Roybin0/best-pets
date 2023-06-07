@@ -22,7 +22,8 @@ import OwnerProfileEditForm from './pages/owners/OwnerProfileEditForm';
 import OwnerPasswordForm from './pages/owners/OwnerPasswordForm';
 import OwnerUsernameForm from './pages/owners/OwnerUsernameForm';
 import NotFound from './components/NotFound';
-import HomePageSorted from './pages/home/HomePageSorted';
+import HomePageSorted from './pages/main/HomePageSorted';
+import LikedPageSorted from './pages/main/LikedPageSorted';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
       <Container className={styles.Main}>
         <Switch>
           <Route exact path='/' render={() => <HomePageSorted />} />
+          <Route exact path='/liked' render={() => <LikedPageSorted />} />
           <Route exact path='/signin' render={() => <SignInForm />} />
           <Route exact path='/signup' render={() => <SignUpForm />} />
           <Route exact path='/pets/new' render={() => <PetCreateForm />} />
