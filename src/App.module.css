@@ -18,7 +18,8 @@
     background-color: #FCFCD4;
     padding: 10px;
     border-radius: 16px;
-    border: 1px solid #fccc20;
+    border: 1px solid #242A3D;
+    color: #242A3D;
 }
 
 .FillerImage {
@@ -51,7 +52,7 @@ a:hover {
 }
 
 a:hover i {
-    color: #3C8CCA;
+    color: #fccc20;
     transition: color ease-in-out 0.3s;
 }
 

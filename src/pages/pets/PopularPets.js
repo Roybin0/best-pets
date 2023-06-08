@@ -1,6 +1,6 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
-import appStyles from "../../App.module.css";
+import styles from "../../styles/PopularOwnerPet.module.css";
 import Asset from "../../components/Asset";
 import { usePetData } from "../../contexts/PetDataContext";
 import PopularPet from "./PopularPet";
@@ -10,13 +10,13 @@ const PopularPets = ({ mobile }) => {
 
   return (
     <Container
-      className={`${appStyles.Content} ${
+      className={`${styles.PopularDark} ${
         mobile && "d-lg-none text-center mb-3"
       }`}
     >
       {popularPets.results.length ? (
         <>
-          <p>Most followed Pets:</p>
+          <h5>Most followed Pets:</h5>
           {mobile ? (
             <div className="d-flex justify-content-around">
               {popularPets.results.slice(0, 4).map((pet) => (
@@ -24,7 +24,7 @@ const PopularPets = ({ mobile }) => {
               ))}
             </div>
           ) : (
-            popularPets.results.map((pet) => (
+            popularPets.results.slice(0, 5).map((pet) => (
               <PopularPet rowkey={pet.id} profile={pet} key={pet.id} />
             ))
           )}

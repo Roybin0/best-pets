@@ -5,3 +5,12 @@
 .AlignRight {
     margin-left: auto;
 }
+
+.PopularDark {
+    background-color: #242A3D;
+    border-radius: 15px;
+    margin-bottom: 16px;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #FCFCD4;
+}

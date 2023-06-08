@@ -191,7 +191,7 @@ const Pet = (props) => {
       </Link>
 
       <Card.Body>
-        {about && <Card.Text>About: {about}</Card.Text>}
+        {about && <Card.Text>{about}</Card.Text>}
         <div className={styles.PetCard}>
           <div className={`d-flex align-items-center justify-content-between`}>
             <div className="d-flex align-items-center">

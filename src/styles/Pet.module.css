@@ -1,9 +1,9 @@
 .Pet {
     background-color: #242A3D;
-    border: 1px solid #fccc20;
     border-radius: 15px;
     margin-bottom: 16px;
     text-align: center;
+    border: 1px solid #FCFCD4;
 }
 
 .PetImage {
@@ -11,6 +11,7 @@
     max-width: 100%;
     object-fit: contain;
     background-color: #fcfce5; 
+    border-radius: 0;
 
 }
 
@@ -20,13 +21,13 @@ h5 {
 }
 
 .Heart {
-    color: #f85032;
+    color: #fc3511;
 }
 
 .Heart:hover {
-    color: #2142b2;
+    color: #ffa798;
 }
 
 .HeartOutline:hover {
-    color: #f85032;
+    color: #fc3511;
 }

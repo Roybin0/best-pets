@@ -26,7 +26,7 @@ function PetsPage({ message, filter = "" }) {
   const { pathname } = useLocation();
 
   const [query, setQuery] = useState("");
-  const currentUser = useCurrentUser();
+  const currentUser = useCurrentUser(); 
 
   useEffect(() => {
     const fetchPets = async () => {
@@ -54,7 +54,8 @@ function PetsPage({ message, filter = "" }) {
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        <PopularOwners mobile />
+        <h1 className="text-uppercase text-center pb-2">all the pets </h1>
+        <PopularPets mobile />
 
         <i className={`fas fa-search ${styles.SearchIcon}`} />
         <Form className={styles.SearchBar}
@@ -64,7 +65,7 @@ function PetsPage({ message, filter = "" }) {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             type="text"
-            className="mr-sm-2"
+            className={`mr-sm-2 ${appStyles.TextDark}`}
             placeholder="Search pets" 
           />
 
