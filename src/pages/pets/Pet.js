@@ -151,12 +151,17 @@ const Pet = (props) => {
     <Card className={styles.Pet}>
       <Card.Body>
         <Media className="justify-content-between">
-          <Row className="d-flex align-items-center justify-content-between">
+          <Row className="d-flex align-items-center justify-content-around">
+            {name && (
+              <Col xs={4} md={4} className="text-left">
+                <Card.Title>Name: <strong>{name}</strong></Card.Title>
+              </Col>
+            )}
             {ownerDetails ? (
-              <Col xs={3} md={3}>
+              <Col xs={4} md={4}>
                 <Link to={`/owners/${owner_id}`}>
-                  <Avatar src={ownerDetails.image} height={55} />
                   <span className="d-none d-md-inline">{owner}</span>
+                  <Avatar src={ownerDetails.image} height={55} />
                 </Link>
               </Col>
             ) : (
@@ -164,13 +169,9 @@ const Pet = (props) => {
                 <span>Loading owner...</span>
               </Col>
             )}
-            {name && (
-              <Col xs={6} md={6} className="text-center text-md-left">
-                <Card.Title>Name: <strong>{name}</strong></Card.Title>
-              </Col>
-            )}
+
             {is_owner && petPage && (
-              <Col xs={3} md={3} className="text-right">
+              <Col xs={4} md={4} className="text-right">
                 <MoreDropdown
                   handleEdit={handleEdit}
                   handleDelete={handleDelete}
@@ -182,10 +183,10 @@ const Pet = (props) => {
       </Card.Body>
 
       <Link to={`/pets/${id}`}>
-        <Card.Img 
-            src={image} 
-            alt={name} 
-            className={styles.PetImage}
+        <Card.Img
+          src={image}
+          alt={name}
+          className={styles.PetImage}
         />
       </Link>
 
