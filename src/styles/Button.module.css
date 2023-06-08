@@ -20,17 +20,9 @@
     color: #fcc100
 }
 
-/* .Button:hover:active {
-    background-color: #3C8CCA
+.DarkOutline {
+    border-color: #242A3D;
 }
-
-.Button:active {
-    background-color: #3C8CCA 
-}
-
-.Button:focus {
-    background-color: #3C8CCA;
-} */
 
 .Wide {
     padding: 10px 50px;

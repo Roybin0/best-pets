@@ -95,7 +95,7 @@ function SignInForm() {
                             </Alert>
                         ))}
 
-                        <Button className={`${btnStyles.Button} ${btnStyles.Wide}`} type="submit">
+                        <Button className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.DarkOutline}`} type="submit">
                             Sign in
                         </Button>
                         {errors.non_field_errors?.map((message, idx) => (

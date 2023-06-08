@@ -1,5 +1,5 @@
 .Row {
-    height: calc(100vh - 150px);
+    height: calc(100vh - 400px);
 }
 
 .Input {
@@ -28,14 +28,15 @@
     text-align: center;
     display: block;
     margin: auto;
+    color: #242A3D;
 }
 
 .Link:hover {
-    color: #3C8CCA;
+    color: #242A3D;
 }
 
 .Link span {
-    color: #3C8CCA;
+    color: #242A3D;
     font-weight: bold;
 }
 
@@ -49,4 +50,11 @@
 
 .SignUpCol {
     height: 400px;
+}
+
+.Header {
+    text-transform: uppercase;
+    text-align: center;
+    padding-bottom: 15px;
+    color: #242A3D !important ;
 }
