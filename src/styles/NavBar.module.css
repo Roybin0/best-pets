@@ -16,6 +16,21 @@
     width: 150px;
 }
 
+.NavBar .DropdownContainer {
+    background-color: #242A3D;
+    padding: 0px !important;
+}
+
+.NavBar .DropdownContainer:before,
+.NavBar .DropdownContainer:after {
+    display: none;
+}
+
+.DropdownLink {
+    background-color: #242A3D;
+    color: #FCFCD4;
+}
+
 .DropdownLink i {
     color: #fccc20
 }

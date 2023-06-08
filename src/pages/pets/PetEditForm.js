@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import upload from "../../assets/upload.png";
-import styles from "../../styles/PetCreateEditForm.module.css";
+import styles from "../../styles/ContentCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { useHistory, useParams } from "react-router-dom";
@@ -85,9 +85,9 @@ function PetEditForm() {
     };
 
     const textFields = (
-        <div className="text-center">
+        <div className="text-center pb-3">
             <Form.Group className={styles.Padding}>
-                <Form.Label>Pet Name</Form.Label>
+                <Form.Label><h5>Pet Name</h5></Form.Label>
                 <Form.Control
                     type="text"
                     name="name"
@@ -102,7 +102,7 @@ function PetEditForm() {
             ))}
 
             <Form.Group className={styles.Padding}>
-                <Form.Label>Pet Type</Form.Label>
+                <Form.Label><h5>Pet Type</h5></Form.Label>
                 <Form.Control as="select"
                     name="pet_type"
                     value={pet_type}
@@ -125,7 +125,7 @@ function PetEditForm() {
             ))}
 
             <Form.Group className={`${styles.Padding} pb-4`}>
-                <Form.Label>About</Form.Label>
+                <Form.Label><h5>About (optional)</h5></Form.Label>
                 <Form.Control
                     type="textarea"
                     name="about"
@@ -140,12 +140,12 @@ function PetEditForm() {
                 </Alert>
             ))}
 
-            <Button className={btnStyles.Button} type="submit">
+            <Button className={`${btnStyles.Button} p-2`} type="submit">
                 Update Pet
             </Button>
 
             <Button
-                className={btnStyles.Button}
+                className={`${btnStyles.Button} p-2`}
                 onClick={() => history.goBack()}
             >
                 Cancel
@@ -157,14 +157,14 @@ function PetEditForm() {
     return (
         <>
             <Form onSubmit={handleSubmit}>
-                <Row>
-                    <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
-                        <h1 className="text-center">Update a Pet</h1>
+                <Row className="align-items-center">
+                    <h1 className={`${styles.TextBright} text-center pb-3`}>Update your Pet</h1>
+                    <Col md={5} lg={4} className="p-0 p-md-2 d-none d-md-block d-flex justify-content-center">
                         <Container className={styles.Content}>{textFields}</Container>
                     </Col>
                     <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
                         <Container
-                            className={`${styles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
+                            className={`${styles.Content} ${styles.Container}`}
                         >
                             <Form.Group className="text-center">
                                 {image ? (
@@ -174,7 +174,7 @@ function PetEditForm() {
                                         </figure>
                                         <div>
                                             <Form.Label
-                                                className={`${btnStyles.Button} btn`}
+                                                className={btnStyles.Button}
                                                 htmlFor="image-upload"
                                             >
                                                 Change the image

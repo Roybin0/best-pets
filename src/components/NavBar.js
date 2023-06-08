@@ -33,8 +33,9 @@ const NavBar = () => {
     const addContentIcon = (
 
         <NavDropdown 
-            title="Add Content" 
+            title="New"
             id="content-dropdown"
+            className={styles.DropdownContainer}
         >
             <NavDropdown.Item
                 className={`${styles.NavLink} ${styles.DropdownLink}`}
@@ -42,14 +43,12 @@ const NavBar = () => {
             >
                 <i className="fas fa-plus"></i> Add a Pet
             </NavDropdown.Item>
-            <NavDropdown.Divider />
             <NavDropdown.Item
                 className={`${styles.NavLink} ${styles.DropdownLink}`}
                 href='/pics/new'
             >
                 <i className="fas fa-plus"></i> Add a Pic
             </NavDropdown.Item>
-            <NavDropdown.Divider />
             <NavDropdown.Item
                 className={`${styles.NavLink} ${styles.DropdownLink}`}
                 href='/tales/new'
@@ -86,6 +85,7 @@ const NavBar = () => {
                 title={<Avatar src={currentUser?.profile_image} height={40} />} 
                 id="profile-dropdown"
                 ref={avatarDropdownRef}
+                className={styles.DropdownContainer}
             >
                 <NavDropdown.Item
                     className={`${styles.NavLink} ${styles.DropdownLink}`}
@@ -93,7 +93,6 @@ const NavBar = () => {
                 >
                     <i className="fas fa-user"></i> My Profile
                 </NavDropdown.Item>
-                <NavDropdown.Divider />
                 <NavDropdown.Item
                     className={`${styles.NavLink} ${styles.DropdownLink}`}
                     href='/'
@@ -152,7 +151,6 @@ const NavBar = () => {
                         <NavLink
                             className={styles.NavLink}
                             activeClassName={styles.Active}
-                            exact
                             to='/pics'
                         >
                             <i className="fas fa-image"></i> Pics
@@ -160,7 +158,6 @@ const NavBar = () => {
                         <NavLink
                             className={styles.NavLink}
                             activeClassName={styles.Active}
-                            exact
                             to='/tales'
                         >
                             <i className="fas fa-book"></i> Tales

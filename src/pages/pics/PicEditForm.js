@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import upload from "../../assets/upload.png";
-import styles from "../../styles/PicsTalesCreateEditForm.module.css";
+import styles from "../../styles/ContentCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { useHistory, useParams } from "react-router-dom";
@@ -15,7 +15,7 @@ import { axiosReq } from "../../api/axiosDefaults";
 import Asset from "../../components/Asset";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
-function PicEditForm() {
+function PicEditForm() { 
 
     const [picData, setPicData] = useState({
         pet: "",
@@ -89,7 +89,10 @@ function PicEditForm() {
         const formData = new FormData();
 
         formData.append("pet", pet)
-        formData.append("image", imageInput.current.files[0])
+        if (imageInput.current.files.length > 0) {
+            const imageFile = imageInput.current.files[0];
+            formData.append("image", imageFile);
+        } 
         formData.append("description", description)
 
         try {
@@ -106,7 +109,7 @@ function PicEditForm() {
     const textFields = (
         <div className="text-center">
             <Form.Group className={styles.Padding}>
-                <Form.Label>Which pet is in this pic?</Form.Label>
+                <Form.Label><h5>Which pet is in this pic?</h5></Form.Label>
                 <Form.Control
                     as="select"
                     name="pet"
@@ -127,7 +130,7 @@ function PicEditForm() {
             ))}
 
             <Form.Group className={`${styles.Padding} pb-4`}>
-                <Form.Label>Image Description</Form.Label>
+                <Form.Label><h5>Image Description</h5></Form.Label>
                 <Form.Control
                     type="textarea"
                     name="description"
@@ -146,12 +149,12 @@ function PicEditForm() {
                 </Alert>
             ))}
 
-            <Button className={btnStyles.Button} type="submit">
+            <Button className={`${btnStyles.Button} p-2`} type="submit">
                 Update Pic
             </Button>
 
             <Button
-                className={btnStyles.Button}
+                className={`${btnStyles.Button} p-2`}
                 onClick={() => history.goBack()}
             >
                 Cancel
@@ -163,14 +166,14 @@ function PicEditForm() {
     return (
         <>
             <Form onSubmit={handleSubmit}>
-                <Row>
-                    <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
-                        <h1 className="text-center">Add a Pic</h1>
+                <Row className="align-items-center">
+                    <h1 className={`${styles.TextBright} text-center pb-3`}>Update your Pic</h1>
+                    <Col md={5} lg={4} className="p-0 p-md-2 d-none d-md-block d-flex justify-content-center">
                         <Container className={styles.Content}>{textFields}</Container>
                     </Col>
                     <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
                         <Container
-                            className={`${styles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
+                            className={`${styles.Content} ${styles.Container}`}
                         >
                             <Form.Group className="text-center">
                                 {image ? (
@@ -180,7 +183,7 @@ function PicEditForm() {
                                         </figure>
                                         <div>
                                             <Form.Label
-                                                className={`${btnStyles.Button} btn`}
+                                                className={btnStyles.Button}
                                                 htmlFor="image-upload"
                                             >
                                                 Change the image

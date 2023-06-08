@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import upload from "../../assets/upload.png";
-import styles from "../../styles/PicsTalesCreateEditForm.module.css";
+import styles from "../../styles/ContentCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { useHistory, useParams } from "react-router-dom";
@@ -99,20 +99,7 @@ function TaleEditForm() {
         if (imageInput.current.files.length > 0) {
             const imageFile = imageInput.current.files[0];
             formData.append("image", imageFile);
-        } else {
-            const defaultImage = getDefaultImage(pet);
-
-            // Fetch the default image as a Blob object
-            if (defaultImage) {
-                try {
-                    const response = await fetch(defaultImage);
-                    const blob = await response.blob();
-                    formData.append("image", blob);
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-        }
+        } 
         formData.append("tldr", tldr);
         formData.append("tale", tale);
 
@@ -138,7 +125,7 @@ function TaleEditForm() {
     const textFields = (
         <div className="text-center">
             <Form.Group className={styles.Padding}>
-                <Form.Label>Which pet is in this tale?</Form.Label>
+                <Form.Label><h5>Which pet is in this tale?</h5></Form.Label>
                 <Form.Control
                     as="select"
                     name="pet"
@@ -155,7 +142,7 @@ function TaleEditForm() {
             {errors?.pet && renderErrorAlerts(errors.pet)}
 
             <Form.Group className={`${styles.Padding} pb-4`}>
-                <Form.Label>TL;DR:</Form.Label>
+                <Form.Label><h5>TL;DR:</h5></Form.Label>
                 <Form.Control
                     type="text"
                     name="tldr"
@@ -168,7 +155,7 @@ function TaleEditForm() {
             {errors?.tldr && renderErrorAlerts(errors.tldr)}
 
             <Form.Group className={`${styles.Padding} pb-4`}>
-                <Form.Label>Tell your tale</Form.Label>
+                <Form.Label><h5>Update your tale</h5></Form.Label>
                 <Form.Control
                     as="textarea"
                     name="tale"
@@ -179,11 +166,14 @@ function TaleEditForm() {
             </Form.Group>
             {errors?.tale && renderErrorAlerts(errors.tale)}
 
-            <Button className={btnStyles.Button} type="submit">
+            <Button className={`${btnStyles.Button} p-2`} type="submit">
                 Update Tale
             </Button>
 
-            <Button className={btnStyles.Button} onClick={() => history.goBack()}>
+            <Button 
+                className={`${btnStyles.Button} p-2`} 
+                onClick={() => history.goBack()}
+            >
                 Cancel
             </Button>
         </div>
@@ -191,25 +181,29 @@ function TaleEditForm() {
 
     return (
         <>
-            <Form onSubmit={handleSubmit}>
-                <Row>
-                    <Col md={7} lg={6} className="d-none d-md-block p-0 p-md-2">
-                        <h1 className="text-center">Tell your tale</h1>
+            <Form onSubmit={handleSubmit} >
+                <Row className="align-items-center">
+                    <h1 className={`${styles.TextBright} text-center pb-3`}>Update your tale</h1>
+                    <Col md={7} lg={6} className="p-0 p-md-2 d-none d-md-block d-flex justify-content-center">
                         <Container className={styles.Content}>{textFields}</Container>
                     </Col>
                     <Col className="py-2 p-0 p-md-2" md={5} lg={6}>
                         <Container
-                            className={`${styles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
+                            className={`${styles.Content} ${styles.Container}`}
                         >
                             <Form.Group className="text-center">
                                 {image ? (
                                     <>
                                         <figure>
-                                            <Image src={image} rounded />
+                                            <Image 
+                                                src={image} 
+                                                rounded 
+                                                className={styles.ExistingImage}
+                                            />
                                         </figure>
                                         <div>
                                             <Form.Label
-                                                className={`${styles.Button} btn`}
+                                                className={styles.Button}
                                                 htmlFor="image-upload"
                                             >
                                                 Change the image
@@ -223,7 +217,7 @@ function TaleEditForm() {
                                     >
                                         <Asset
                                             src={upload}
-                                            message="Click or tap to upload an image (optional). Your pet's profile pic will show beside your tale."
+                                            message="Click or tap to upload an image (optional). We'll use your pet's profile pic if no image is added."
                                         />
                                     </Form.Label>
                                 )}
@@ -236,10 +230,10 @@ function TaleEditForm() {
                                     style={{ display: "none" }}
                                 />
                             </Form.Group>
+                            <div className="d-md-none">{textFields}</div>
                         </Container>
                     </Col>
-                </Row>
-                <Container className="d-md-none">{textFields}</Container>
+                </Row>       
             </Form>
         </>
     );

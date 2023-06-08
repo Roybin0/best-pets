@@ -1,0 +1,31 @@
+.Container {
+    min-height: 350px;
+}
+
+.Content {
+  background-color: #FCFCD4;
+  padding: 10px;
+  border-radius: 1%;
+  border: 1px solid #242A3D;
+  color: #242A3D;
+}
+
+.Padding {
+  padding: 10px;
+}
+
+h5 {
+  font-weight: bold;
+}
+
+.TextBright {
+  color: #fccc20 !important;
+}
+
+.ExistingImage {
+  max-height: 400px;
+  max-width: 400px;
+}
+/* .Container {
+  min-height: 343px;
+} */

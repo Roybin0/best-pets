@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import upload from "../../assets/upload.png";
-import styles from "../../styles/PicsTalesCreateEditForm.module.css";
+import styles from "../../styles/ContentCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { useHistory } from "react-router-dom";
@@ -31,12 +31,11 @@ function TaleCreateForm() {
     const is_owner = currentUser?.username;
 
     const [pets, setPets] = useState({ results: [] });
+    const [defaultImage, setDefaultImage] = useState("");
 
     const [errors, setErrors] = useState({});
     const history = useHistory();
     const imageInput = useRef(null);
-
-    const [defaultImages, setDefaultImages] = useState({});
 
     // Fetch all pets belonging to the current user
     useEffect(() => {
@@ -45,9 +44,8 @@ function TaleCreateForm() {
                 const encodedOwner = encodeURIComponent(is_owner);
                 const { data } = await axiosReq.get(`/pets/?owner__username=${encodedOwner}`);
                 setPets(data);
-                // console.log("API response:", data);
             } catch (err) {
-                console.log(err);
+                console.log("Fetch data error:", err);
             }
         };
 
@@ -55,19 +53,6 @@ function TaleCreateForm() {
             fetchPets();
         }
     }, [currentUser, is_owner]);
-
-    // Set pet profile image to default if no image is added
-    useEffect(() => {
-        const petDefaultImages = {};
-
-        pets.results.forEach((pet) => {
-            if (pet.image) {
-                petDefaultImages[pet.id] = pet.image.url;
-            }
-        });
-
-        setDefaultImages(petDefaultImages);
-    }, [pets.results]);
 
     const handleChange = (event) => {
         setTaleData({
@@ -94,21 +79,7 @@ function TaleCreateForm() {
         if (imageInput.current.files.length > 0) {
             const imageFile = imageInput.current.files[0];
             formData.append("image", imageFile);
-        } else {
-            const selectedPet = pets.results.find((pet) => pet.id === pet);
-            const defaultImage = selectedPet?.image;
-
-            // Fetch the default image as a Blob object
-            if (defaultImage) {
-                try {
-                    const response = await fetch(defaultImage);
-                    const blob = await response.blob();
-                    formData.append("image", blob);
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-        }
+        } 
         formData.append("tldr", tldr)
         formData.append("tale", tale)
 
@@ -124,15 +95,16 @@ function TaleCreateForm() {
     };
 
     const textFields = (
-        <div className="text-center">
+        <div className="text-center pb-3">
             <Form.Group className={styles.Padding}>
-                <Form.Label>Which pet is in this tale?</Form.Label>
+                <Form.Label><h5>Which pet is in this tale?</h5></Form.Label>
                 <Form.Control
                     as="select"
                     name="pet"
                     value={pet}
                     onChange={handleChange}
                 >
+                    <option>Choose your pet below</option>
                     {pets.results.map((pet) => (
                         <option key={pet.id} value={pet.id}>
                             {pet.name}
@@ -147,7 +119,7 @@ function TaleCreateForm() {
             ))}
 
             <Form.Group className={`${styles.Padding} pb-4`}>
-                <Form.Label>TL;DR:</Form.Label>
+                <Form.Label><h5>TL;DR:</h5></Form.Label>
                 <Form.Control
                     type="text"
                     name="tldr"
@@ -165,7 +137,7 @@ function TaleCreateForm() {
 
 
             <Form.Group className={`${styles.Padding} pb-4`}>
-                <Form.Label>Tell your tale</Form.Label>
+                <Form.Label><h5>Tell your tale</h5></Form.Label>
                 <Form.Control
                     as="textarea"
                     name="tale"
@@ -180,12 +152,12 @@ function TaleCreateForm() {
                 </Alert>
             ))}
 
-            <Button className={btnStyles.Button} type="submit">
+            <Button className={`${btnStyles.Button} p-2`} type="submit">
                 Add Tale
             </Button>
 
             <Button
-                className={btnStyles.Button}
+                className={`${btnStyles.Button} p-2`}
                 onClick={() => history.goBack()}
             >
                 Cancel
@@ -196,39 +168,44 @@ function TaleCreateForm() {
 
     return (
         <>
-            <Form onSubmit={handleSubmit}>
-                <Row>
-                    <Col md={7} lg={6} className="d-none d-md-block p-0 p-md-2">
-                        <h1 className="text-center">Tell your tale</h1>
+            <Form onSubmit={handleSubmit} encType="multipart/form-data">
+                <Row className="align-items-center">
+                    <h1 className={`${styles.TextBright} text-center pb-3`}>Tell your tale</h1>
+                    <Col md={7} lg={6} className="p-0 p-md-2 d-none d-md-block d-flex justify-content-center">
                         <Container className={styles.Content}>{textFields}</Container>
                     </Col>
                     <Col className="py-2 p-0 p-md-2" md={5} lg={6}>
                         <Container
-                            className={`${styles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
+                            className={`${styles.Content} ${styles.Container}`}
                         >
                             <Form.Group className="text-center">
-                                {image ? (
+                                {image && (
                                     <>
                                         <figure>
                                             <Image className={appStyles.Image} src={image} rounded />
                                         </figure>
                                         <div>
                                             <Form.Label
-                                                className={`${btnStyles.Button} btn`}
+                                                className={btnStyles.Button}
                                                 htmlFor="image-upload"
                                             >
                                                 Change the image
                                             </Form.Label>
+                                            <br />
+                                            <small>Optional - We'll use your pet's profile pic if no new image is added</small>
                                         </div>
                                     </>
-                                ) : (
+                                )}
+                                {!image && (
                                     <Form.Label
                                         className="d-flex justify-content-center"
                                         htmlFor="image-upload"
                                     >
-                                        <Asset src={upload} message="Click or tap to upload an image (optional). Your pet's profile pic will show beside your tale." />
+                                        <Asset
+                                            src={upload}
+                                            message="Click or tap to upload an image (optional). Your pet's profile pic will show beside your tale."
+                                        />
                                     </Form.Label>
-
                                 )}
 
                                 <Form.File
