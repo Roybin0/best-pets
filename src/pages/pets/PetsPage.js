@@ -65,7 +65,7 @@ function PetsPage({ message, filter = "" }) {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             type="text"
-            className={`mr-sm-2 ${appStyles.TextDark}`}
+            className="mr-sm-2"
             placeholder="Search pets" 
           />
 

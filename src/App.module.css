@@ -49,6 +49,7 @@ a {
 
 a:hover {
     text-decoration: none;
+    color: #fccc20;
 }
 
 a:hover i {

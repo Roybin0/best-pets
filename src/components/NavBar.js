@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -17,7 +17,8 @@ const NavBar = () => {
     const currentUser = useCurrentUser();
     const setCurrentUser = useSetCurrentUser();
 
-    const {expanded, setExpanded, ref} = useClickOutsideToggle();
+    const avatarDropdownRef = useRef(null);
+    const { expanded, setExpanded, ref } = useClickOutsideToggle([avatarDropdownRef]);
 
     const handleSignOut = async () => {
         try {
@@ -25,38 +26,36 @@ const NavBar = () => {
             setCurrentUser(null);
             removeTokenTimestamp();
         } catch (err) {
-            // console.log(err);
+            console.log(err);
         }
     };
 
-    const handleNestedLinkClick = (e) => {
-        // Prevent event propagation to the parent dropdown component
-        e.stopPropagation();
-      };
-
     const addContentIcon = (
 
-        <NavDropdown title="Add Content" id="basic-nav-dropdown">
-            <NavLink
-                className={styles.NavLink}
-                to='/pets/new'
+        <NavDropdown 
+            title="Add Content" 
+            id="content-dropdown"
+        >
+            <NavDropdown.Item
+                className={`${styles.NavLink} ${styles.DropdownLink}`}
+                href='/pets/new'
             >
                 <i className="fas fa-plus"></i> Add a Pet
-            </NavLink>
+            </NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavLink
-                className={styles.NavLink}
-                to='/pics/new'
+            <NavDropdown.Item
+                className={`${styles.NavLink} ${styles.DropdownLink}`}
+                href='/pics/new'
             >
                 <i className="fas fa-plus"></i> Add a Pic
-            </NavLink>
+            </NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavLink
-                className={styles.NavLink}
-                to='/tales/new'
+            <NavDropdown.Item
+                className={`${styles.NavLink} ${styles.DropdownLink}`}
+                href='/tales/new'
             >
                 <i className="fas fa-plus"></i> Add a Tale
-            </NavLink>
+            </NavDropdown.Item>
         </NavDropdown>
 
     )
@@ -85,23 +84,23 @@ const NavBar = () => {
         <>
             <NavDropdown 
                 title={<Avatar src={currentUser?.profile_image} height={40} />} 
-                id="basic-nav-dropdown"
-                onClick={handleNestedLinkClick}
+                id="profile-dropdown"
+                ref={avatarDropdownRef}
             >
-                <NavLink
-                    className={styles.NavLink}
-                    to={`/owners/${currentUser?.owner_id}`}
+                <NavDropdown.Item
+                    className={`${styles.NavLink} ${styles.DropdownLink}`}
+                    href={`/owners/${currentUser?.owner_id}`}
                 >
-                    <i className="far fa-face-awesome"></i> My Profile
-                </NavLink>
+                    <i className="fas fa-user"></i> My Profile
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavLink
-                    className={styles.NavLink}
-                    to='/'
+                <NavDropdown.Item
+                    className={`${styles.NavLink} ${styles.DropdownLink}`}
+                    href='/'
                     onClick={handleSignOut}
                 >
                     <i className="fas fa-sign-out-alt"></i> Sign Out
-                </NavLink>
+                </NavDropdown.Item>
             </NavDropdown>
         </>
     )
@@ -126,9 +125,11 @@ const NavBar = () => {
                 </NavLink>
                 {currentUser && addContentIcon}
                 <Navbar.Toggle 
+                    className={styles.Hamburger}
                     ref={ref}
                     onClick={() => setExpanded(!expanded)} 
                     aria-controls="basic-navbar-nav" 
+
                 />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto text-left">
@@ -141,13 +142,6 @@ const NavBar = () => {
                             <i className="fas fa-house"></i> Home
                         </NavLink>
                         {currentUser && myFeedIcon}
-                        <NavLink
-                            className={styles.NavLink}
-                            activeClassName={styles.Active}
-                            to='/owners'
-                        >
-                            <i className="fas fa-user"></i> Owners
-                        </NavLink>
                         <NavLink
                             className={styles.NavLink}
                             activeClassName={styles.Active}
