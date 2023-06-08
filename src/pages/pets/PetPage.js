@@ -12,7 +12,7 @@ import Comment from "../comments/Comment";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Asset from "../../components/Asset";
 import { fetchMoreData } from "../../utils/utils";
-// import PopularProfiles from "../profiles/PopularProfiles";
+import PopularPets from "./PopularPets";
 
 function PetPage() {
   const { id } = useParams();
@@ -44,7 +44,7 @@ function PetPage() {
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        {/* <PopularProfiles mobile /> */}
+        <PopularPets mobile />
         <Pet {...pet.results[0]} setPets={setPet} petPage />
         <Container className={appStyles.Content}>
           {currentUser ? (
@@ -82,7 +82,7 @@ function PetPage() {
         </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
-        {/* <PopularProfiles /> */}
+        <PopularPets />
       </Col>
     </Row>
   );
