@@ -9,7 +9,6 @@ import Pet from "./Pet";
 import Asset from "../../components/Asset";
 
 import appStyles from "../../App.module.css";
-import styles from "../../styles/PetsPage.module.css";
 import { useLocation } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 
@@ -17,10 +16,11 @@ import NoResults from "../../assets/noresults.png";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
 import PopularOwners from "../owners/PopularOwners";
-import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import PopularPets from "./PopularPets";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
-function PetsPage({ message, filter = "" }) {
+
+function PetsPage({ filter = "" }) {
   const [pets, setPets] = useState({ results: [] });
   const [hasLoaded, setHasLoaded] = useState(false);
   const { pathname } = useLocation();
@@ -56,11 +56,11 @@ function PetsPage({ message, filter = "" }) {
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <h1 className="text-uppercase text-center pb-2">all the pets </h1>
         <PopularPets mobile />
-
-        <i className={`fas fa-search ${styles.SearchIcon}`} />
-        <Form className={styles.SearchBar}
-        onSubmit={(event) => event.preventDefault()}>
-
+        <i className={`fas fa-search ${appStyles.SearchIcon}`} />
+        <Form 
+          className={appStyles.SearchBar}
+          onSubmit={(event) => event.preventDefault()}
+        >
           <Form.Control
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -77,7 +77,7 @@ function PetsPage({ message, filter = "" }) {
               <InfiniteScroll
                 children={
                   pets.results.map((pet) => (
-                    <Pet key={pet.id} {...pet} setPets={setPets} />
+                    <Pet key={pet.id} {...pet}/>
                   ))
                 }
 

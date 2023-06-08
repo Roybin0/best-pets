@@ -12,7 +12,6 @@
     object-fit: contain;
     background-color: #fcfce5; 
     border-radius: 0;
-
 }
 
 .Pet figure,
@@ -29,5 +28,5 @@ h5 {
 }
 
 .HeartOutline:hover {
-    color: #fc3511;
+    color: #fc3511; 
 }

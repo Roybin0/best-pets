@@ -1,4 +1,6 @@
-.App h1, h2, h3 {
+.App h1,
+h2,
+h3 {
     font-family: "Krona One", sans-serif;
     color: #FCFCD4;
 }
@@ -36,6 +38,31 @@
 
 .TextCenter {
     text-align: center;
+}
+
+.SearchBar input {
+    border-radius: 20px;
+    color: #242a3d;
+    padding-left: 40px;
+    margin-bottom: 16px;
+    background-color: #FCFCE5;
+}
+
+.SearchIcon {
+    position: absolute;
+    font-size: 1.2rem;
+    padding: 9px;
+    padding-left: 15px;
+    color: #242A3D;
+}
+
+.SearchIcon:hover {
+    cursor: default;
+    color: #cfced3;
+}
+
+.NoLinkUnderline {
+    text-decoration: none;
 }
 
 * {
@@ -79,7 +106,7 @@ figure {
     display: inline-block;
 }
 
-/* scrollbar */
+/* scrollbar
 *::-webkit-scrollbar {
     width: 5px;
 }
@@ -94,4 +121,4 @@ figure {
 
 *::-webkit-scrollbar-thumb:hover {
     background: #555;
-}
+} */

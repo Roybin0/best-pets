@@ -9,17 +9,18 @@ import Tale from "./Tale";
 import Asset from "../../components/Asset";
 
 import appStyles from "../../App.module.css";
-import styles from "../../styles/TalesPage.module.css";
 import { useLocation } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 
 import NoResults from "../../assets/noresults.png";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
-// import PopularProfiles from "../profiles/PopularProfiles";
+import PopularOwners from "../owners/PopularOwners";
+import PopularPets from "../pets/PopularPets";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
-function TalesPage({ message, filter = "" }) {
+
+function TalesPage({ filter = "" }) {
   const [tales, setTales] = useState({ results: [] });
   const [hasLoaded, setHasLoaded] = useState(false);
   const { pathname } = useLocation();
@@ -53,11 +54,11 @@ function TalesPage({ message, filter = "" }) {
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        {/* <PopularProfiles mobile /> */}
-
-        <i className={`fas fa-search ${styles.SearchIcon}`} />
+        <h1 className="text-uppercase text-center pb-2">all the tales </h1>
+        <PopularPets mobile />
+        <i className={`fas fa-search ${appStyles.SearchIcon}`} />
         <Form 
-            className={styles.SearchBar}
+            className={appStyles.SearchBar}
             onSubmit={(event) => event.preventDefault()}
         >
           <Form.Control
@@ -76,7 +77,7 @@ function TalesPage({ message, filter = "" }) {
               <InfiniteScroll
                 children={
                   tales.results.map((tale) => (
-                    <Tale key={tale.id} {...tale} setTales={setTales} />
+                    <Tale key={tale.id} {...tale}/>
                   ))
                 }
 
@@ -99,7 +100,9 @@ function TalesPage({ message, filter = "" }) {
         )}
       </Col>
       <Col md={4} className="d-none d-lg-block p-0 p-lg-2">
-        {/* <PopularProfiles /> */}
+          <PopularOwners />
+          <br></br>
+          <PopularPets />
       </Col>
     </Row>
   );

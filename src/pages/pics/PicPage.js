@@ -12,7 +12,8 @@ import Comment from "../comments/Comment";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Asset from "../../components/Asset";
 import { fetchMoreData } from "../../utils/utils";
-// import PopularProfiles from "../profiles/PopularProfiles";
+import PopularOwners from "../owners/PopularOwners";
+import PopularPets from "../pets/PopularPets";
 
 function PicPage() {
   const { id } = useParams();
@@ -44,7 +45,7 @@ function PicPage() {
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        {/* <PopularProfiles mobile /> */}
+        <PopularOwners mobile />
         <Pic {...pic.results[0]} setPics={setPic} picPage />
         <Container className={appStyles.Content}>
           {currentUser ? (
@@ -82,7 +83,9 @@ function PicPage() {
         </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
-        {/* <PopularProfiles /> */}
+        <PopularOwners />
+        <br />
+        <PopularPets />
       </Col>
     </Row>
   );

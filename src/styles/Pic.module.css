@@ -1,8 +1,31 @@
 .Pic {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 120px;
-    margin-bottom: 16px;
-  }
+  background-color: #242A3D;
+  border-radius: 15px;
+  margin-bottom: 16px;
+  text-align: center;
+  border: 1px solid #FCFCD4;
+}
+
+.PicImage {
+  max-height: 50vh;
+  background-color: #fcfce5; 
+  border-radius: 0;
+
+}
+
+.Pic figure,
+h5 {
+  margin: 0 0;
+}
+
+.Heart {
+  color: #fc3511;
+}
+
+.Heart:hover {
+  color: #ffa798;
+}
+
+.HeartOutline:hover {
+  color: #fc3511; 
+}

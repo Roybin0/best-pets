@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import appStyles from "../../App.module.css";
 import styles from "../../styles/Pet.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
 import Media from "react-bootstrap/Media";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
@@ -52,40 +52,6 @@ const Pet = (props) => {
   }, [owner_id]);
 
   useEffect(() => {
-    // Check if pet is liked by the current user
-    const checkLikedStatus = async () => {
-      if (currentUser && currentUser.username && id) {
-        try {
-          const { data } = await axiosReq.get(
-            `/likes/?owner__username=${currentUser?.username}&object_id=${id}&content_type__model=pet`
-          );
-          if (data.results.length > 0) {
-            setLiked(true);
-            setLikeId(data.results[0].like_id);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    };
-
-    checkLikedStatus();
-  }, [currentUser, id]);
-
-  const handleEdit = () => {
-    history.push(`/pets/${id}/edit`);
-  };
-
-  const handleDelete = async () => {
-    try {
-      await axiosRes.delete(`/pets/${id}`);
-      history.goBack();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
     const fetchLikesCount = async () => {
       try {
         const { data } = await axiosReq.get(`/pets/${id}`);
@@ -117,6 +83,19 @@ const Pet = (props) => {
 
     checkLikedStatus();
   }, [currentUser, id]);
+
+  const handleEdit = () => {
+    history.push(`/pets/${id}/edit`);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axiosRes.delete(`/pets/${id}`);
+      history.goBack();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleLike = async () => {
     try {
@@ -154,12 +133,12 @@ const Pet = (props) => {
           <Row className="d-flex align-items-center justify-content-around">
             {name && (
               <Col xs={4} md={4} className="text-left">
-                <Card.Title>Name: <strong>{name}</strong></Card.Title>
+                <Card.Title><small>Name:</small> <strong>{name}</strong></Card.Title>
               </Col>
             )}
             {ownerDetails ? (
               <Col xs={4} md={4}>
-                <Link to={`/owners/${owner_id}`}>
+                <Link to={`/owners/${owner_id}`} className={appStyles.NoLinkUnderline}>
                   <span className="d-none d-md-inline">{owner}</span>
                   <Avatar src={ownerDetails.image} height={55} />
                 </Link>
@@ -192,8 +171,8 @@ const Pet = (props) => {
 
       <Card.Body>
         {about && <Card.Text>{about}</Card.Text>}
-        <div className={styles.PetCard}>
-          <div className={`d-flex align-items-center justify-content-between`}>
+        <div>
+          <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center">
               {is_owner ? (
                 <OverlayTrigger
@@ -233,4 +212,4 @@ const Pet = (props) => {
   );
 };
 
-export default Pet;
+export default Pet; 

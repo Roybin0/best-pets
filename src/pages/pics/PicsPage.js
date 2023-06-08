@@ -9,17 +9,18 @@ import Pic from "./Pic";
 import Asset from "../../components/Asset";
 
 import appStyles from "../../App.module.css";
-import styles from "../../styles/PicsPage.module.css";
 import { useLocation } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 
 import NoResults from "../../assets/noresults.png";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
-// import PopularProfiles from "../profiles/PopularProfiles";
+import PopularOwners from "../owners/PopularOwners";
+import PopularPets from "../pets/PopularPets";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
-function PicsPage({ message, filter = "" }) {
+
+function PicsPage({ filter = "" }) {
   const [pics, setPics] = useState({ results: [] });
   const [hasLoaded, setHasLoaded] = useState(false);
   const { pathname } = useLocation();
@@ -47,24 +48,24 @@ function PicsPage({ message, filter = "" }) {
     return () => {
       clearTimeout(timer);
     };
-    
+
   }, [filter, query, pathname, currentUser]);
 
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        {/* <PopularProfiles mobile /> */}
-
-        <i className={`fas fa-search ${styles.SearchIcon}`} />
-        <Form className={styles.SearchBar}
-        onSubmit={(event) => event.preventDefault()}>
+        <h1 className="text-uppercase text-center pb-2">all the pics </h1>
+        <PopularOwners mobile />
+        <i className={`fas fa-search ${appStyles.SearchIcon}`} />
+        <Form className={appStyles.SearchBar}
+          onSubmit={(event) => event.preventDefault()}>
 
           <Form.Control
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             type="text"
             className="mr-sm-2"
-            placeholder="Search pics" 
+            placeholder="Search pics"
           />
 
         </Form>
@@ -75,7 +76,7 @@ function PicsPage({ message, filter = "" }) {
               <InfiniteScroll
                 children={
                   pics.results.map((pic) => (
-                    <Pic key={pic.id} {...pic} setPics={setPics} />
+                    <Pic key={pic.id} {...pic} />
                   ))
                 }
 
@@ -84,7 +85,7 @@ function PicsPage({ message, filter = "" }) {
                 hasMore={!!pics.next}
                 next={() => fetchMoreData(pics, setPics)}
               />
-  
+
             ) : (
               <Container className={appStyles.Content}>
                 <Asset src={NoResults} message="No pics found! Try again." />
@@ -94,11 +95,13 @@ function PicsPage({ message, filter = "" }) {
         ) : (
           <Container className={appStyles.Content}>
             <Asset spinner />
-          </Container> 
+          </Container>
         )}
       </Col>
       <Col md={4} className="d-none d-lg-block p-0 p-lg-2">
-        {/* <PopularProfiles /> */}
+        <PopularOwners />
+        <br></br>
+        <PopularPets />
       </Col>
     </Row>
   );
