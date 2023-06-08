@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-import NoResults from "../../assets/noresultsfound.jpeg";
+import NoResults from "../../assets/noresults.png";
 import Asset from "../../components/Asset";
 import PopularPet from "../pets/PopularPet";
 import Tale from "../tales/Tale";

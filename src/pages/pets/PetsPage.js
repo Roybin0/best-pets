@@ -13,7 +13,7 @@ import styles from "../../styles/PetsPage.module.css";
 import { useLocation } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 
-import NoResults from "../../assets/noresultsfound.jpeg";
+import NoResults from "../../assets/noresults.png";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
 import PopularOwners from "../owners/PopularOwners";

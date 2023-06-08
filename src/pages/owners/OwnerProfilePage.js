@@ -25,7 +25,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Tale from "../tales/Tale"
 import Pic from "../pics/Pic"
 import { fetchMoreData } from "../../utils/utils";
-import NoResults from "../../assets/noresultsfound.jpeg";
+import NoResults from "../../assets/noresults.png";
 import { ProfileEditDropdown } from "../../components/MoreDropdown";
 import OwnerProfilePet from "./OwnerProfilePet";
 
