@@ -47,3 +47,8 @@
 .SpaceBetween {
     justify-content: space-around;
 }
+
+#PetContainer {
+    width: 100%;
+    display: flex;
+}
