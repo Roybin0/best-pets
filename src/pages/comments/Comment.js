@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from "../../styles/Comment.module.css";
-import appStyles from "../../App.module.css";
 import Media from 'react-bootstrap/Media';
 import { Link } from 'react-router-dom/';
 import Avatar from '../../components/Avatar';

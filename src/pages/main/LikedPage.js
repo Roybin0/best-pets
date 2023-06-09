@@ -23,7 +23,6 @@ const LikedPageSorted = () => {
   const [likedPets, setLikedPets] = useState({ results: [] });
   const [likedData, setLikedData] = useState({ results: [] });
   const [page, setPage] = useState(1);
-  const [hasMorePets, setHasMorePets] = useState(true);
   const [hasMorePics, setHasMorePics] = useState(true);
   const [hasMoreTales, setHasMoreTales] = useState(true);
   const currentUser = useCurrentUser();
@@ -37,7 +36,6 @@ const LikedPageSorted = () => {
           `/pets/?followed_pet__owner=${id}&ordering=-likes__created_at`
         );
         setLikedPets(data);
-        setHasMorePets(!!data.next);
       } catch (err) {
         // console.log("Fetch Pet Data error:", err);
       }
@@ -123,7 +121,7 @@ const LikedPageSorted = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [id, page, hasMorePics, hasMoreTales]);
+  }, [id, page, hasMorePics, hasMoreTales, likedData]);
 
   return (
     <>

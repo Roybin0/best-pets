@@ -8,6 +8,9 @@ import PopularPet from "./PopularPet";
 const PopularPets = ({ mobile }) => {
   const { popularPets } = usePetData(); 
 
+  const uniquePets = Array.from(new Set(popularPets.results.map((pet) => pet.id)))
+  .map((id) => popularPets.results.find((pet) => pet.id === id));
+
   return (
     <Container
       className={`${styles.PopularDark} ${
@@ -19,12 +22,14 @@ const PopularPets = ({ mobile }) => {
           <h5>Most followed Pets:</h5>
           {mobile ? (
             <div className="d-flex justify-content-around">
-              {popularPets.results.slice(0, 4).map((pet) => (
+              {uniquePets.slice(0, 4).map((pet) => (
                 <PopularPet rowkey={pet.id} profile={pet} mobile key={pet.id} />
+                
               ))}
+              
             </div>
           ) : (
-            popularPets.results.slice(0, 5).map((pet) => (
+            uniquePets.slice(0, 5).map((pet) => (
               <PopularPet rowkey={pet.id} profile={pet} key={pet.id} />
             ))
           )}

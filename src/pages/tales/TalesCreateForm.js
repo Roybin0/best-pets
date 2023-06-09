@@ -31,7 +31,6 @@ function TaleCreateForm() {
     const is_owner = currentUser?.username;
 
     const [pets, setPets] = useState({ results: [] });
-    const [defaultImage, setDefaultImage] = useState("");
 
     const [errors, setErrors] = useState({});
     const history = useHistory();

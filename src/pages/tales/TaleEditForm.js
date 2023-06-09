@@ -8,7 +8,6 @@ import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import upload from "../../assets/upload.png";
 import styles from "../../styles/ContentCreateEditForm.module.css";
-import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { useHistory, useParams } from "react-router-dom";
 import { axiosReq } from "../../api/axiosDefaults";
