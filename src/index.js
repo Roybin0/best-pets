@@ -9,17 +9,15 @@ import { OwnerDataProvider } from './contexts/OwnerDataContext';
 import { PetDataProvider } from './contexts/PetDataContext';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <CurrentUserProvider>
-        <OwnerDataProvider>
-          <PetDataProvider>
-            <App />
-          </PetDataProvider>
-        </OwnerDataProvider>
-      </CurrentUserProvider>
-    </Router>
-  </React.StrictMode>,
+  <Router>
+    <CurrentUserProvider>
+      <OwnerDataProvider>
+        <PetDataProvider>
+          <App />
+        </PetDataProvider>
+      </OwnerDataProvider>
+    </CurrentUserProvider>
+  </Router>,
   document.getElementById('root')
 );
 
