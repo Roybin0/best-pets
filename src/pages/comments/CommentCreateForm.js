@@ -53,7 +53,7 @@ function CommentCreateForm(props) {
             }));
             setComment("");
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     };
 

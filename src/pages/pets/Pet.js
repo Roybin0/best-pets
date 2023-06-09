@@ -43,7 +43,7 @@ const Pet = (props) => {
           const { data } = await axiosReq.get(`/owners/${owner_id}`);
           setOwnerDetails(data);
         } catch (err) {
-          console.log(err);
+          // console.log(err);
         }
       };
 
@@ -59,7 +59,7 @@ const Pet = (props) => {
           setLikesCount(data.likes_count);
         }
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
@@ -76,7 +76,7 @@ const Pet = (props) => {
           }
           fetchLikesCount();
         } catch (err) {
-          console.log(err);
+          // console.log(err);
         }
       }
     };
@@ -93,7 +93,7 @@ const Pet = (props) => {
       await axiosRes.delete(`/pets/${id}`);
       history.goBack();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -109,7 +109,7 @@ const Pet = (props) => {
         setLikesCount((prevCount) => prevCount + 1);
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -122,7 +122,7 @@ const Pet = (props) => {
         setLikesCount((prevCount) => prevCount - 1);
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

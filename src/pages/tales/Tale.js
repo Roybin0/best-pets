@@ -48,7 +48,7 @@ const Tale = (props) => {
             await axiosRes.delete(`/pettales/${id}`);
             history.goBack();
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     };
 
@@ -61,7 +61,7 @@ const Tale = (props) => {
                 setLikesCount((prevCount) => prevCount + 1);
             }
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     };
 
@@ -74,7 +74,7 @@ const Tale = (props) => {
                 setLikesCount((prevCount) => prevCount - 1);
             }
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     };   
 
@@ -86,7 +86,7 @@ const Tale = (props) => {
                 setLikesCount(data.likes_count);
               }
             } catch (err) {
-              console.log(err);
+            //   console.log(err);
             }
         };
 
@@ -101,7 +101,7 @@ const Tale = (props) => {
                       }
                     fetchLikesCount();
                 } catch (err) {
-                    console.log(err);
+                    // console.log(err);
                 }
             }
         };

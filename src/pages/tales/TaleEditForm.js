@@ -40,9 +40,8 @@ function TaleEditForm() {
                 const encodedOwner = encodeURIComponent(is_owner);
                 const { data } = await axiosReq.get(`/pets/?owner__username=${encodedOwner}`);
                 setPets(data);
-                // console.log("API response:", data);
             } catch (err) {
-                console.log(err);
+                // console.log(err);
             }
         };
 
@@ -58,7 +57,7 @@ function TaleEditForm() {
                 const { pet, image, tldr, tale, is_owner } = data;
                 is_owner ? setTaleData({ pet, image, tldr, tale }) : history.push("/");
             } catch (err) {
-                console.log(err);
+                // console.log(err);
             }
         };
 
@@ -107,7 +106,7 @@ function TaleEditForm() {
             const { data } = await axiosReq.put(`/pettales/${id}`, formData);
             history.push(`/tales/${data.id}`);
         } catch (err) {
-            console.log(err);
+            // console.log(err);
             if (err.response?.status !== 401) {
                 setErrors(err.response?.data);
             }

@@ -47,7 +47,7 @@ const Pic = (props) => {
             await axiosRes.delete(`/petpics/${id}`);
             history.goBack();
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     };
 
@@ -63,7 +63,7 @@ const Pic = (props) => {
                 setLikesCount((prevCount) => prevCount + 1);
             }
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     };
 
@@ -76,7 +76,7 @@ const Pic = (props) => {
                 setLikesCount((prevCount) => prevCount - 1);
             }
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     };
 
@@ -88,7 +88,7 @@ const Pic = (props) => {
               setLikesCount(data.likes_count);
             }
           } catch (err) {
-            console.log(err);
+            // console.log(err);
           }
         };
     
@@ -105,7 +105,7 @@ const Pic = (props) => {
               }
               fetchLikesCount();
             } catch (err) {
-              console.log(err);
+            //   console.log(err);
             }
           }
         };

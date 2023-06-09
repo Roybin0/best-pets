@@ -38,7 +38,7 @@ function PetEditForm() {
 
                 is_owner ? setPetData({ name, pet_type, image, about }) : history.push('/')
             } catch (err) {
-                console.log(err)
+                // console.log(err)
             }
         };
 
@@ -77,7 +77,7 @@ function PetEditForm() {
             const { data } = await axiosReq.put(`/pets/${id}`, formData);
             history.push(`/pets/${data.id}`);
         } catch (err) {
-            console.log(err)
+            // console.log(err)
             if (err.response?.status !== 401) {
                 setErrors(err.response?.data);
             }

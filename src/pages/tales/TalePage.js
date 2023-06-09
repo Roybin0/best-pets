@@ -33,7 +33,7 @@ function TalePage() {
         setTale({ results: [tale] })
         setComments(comments)
       } catch (err) {
-        console.log(err)
+        // console.log(err)
       }
     };
 

@@ -46,7 +46,7 @@ const OwnerProfileEditForm = () => {
             setOwnerData({ name, about, image });
           }
         } catch (err) {
-          console.log(err);
+          // console.log(err);
           history.push("/");
         }
       } else {

@@ -33,7 +33,7 @@ function PetPage() {
         setPet({ results: [pet] })
         setComments(comments)
       } catch (err) {
-        console.log(err)
+        // console.log(err)
       }
     };
 

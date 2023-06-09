@@ -33,7 +33,7 @@ const HomePage = () => {
         setPics(picsData.data);
         setTales(talesData.data);
       } catch (err) {
-        console.log("Fetch inital data error:", err);
+        // console.log("Fetch inital data error:", err);
       }
     };
 

@@ -34,7 +34,7 @@ function PicPage() {
         setPic({ results: [pic] })
         setComments(comments)
       } catch (err) {
-        console.log(err)
+        // console.log(err)
       }
     };
 

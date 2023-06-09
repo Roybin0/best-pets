@@ -64,16 +64,11 @@ function OwnerProfilePage() {
                 setOwnerTales(ownerTales);
                 setHasLoaded(true);
             } catch (err) {
-                console.log(err);
+                // console.log(err);
             }
         };
         fetchData();
     }, [id, setOwnerData]);
-
-    console.log("Owner", owner)
-    console.log("currentUser username",currentUser?.username)
-    console.log("Owner.owner",owner?.owner)
-    console.log("id", owner?.id)
 
     const mainProfile = (
         <>

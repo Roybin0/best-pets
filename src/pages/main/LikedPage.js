@@ -39,12 +39,11 @@ const LikedPageSorted = () => {
         setLikedPets(data);
         setHasMorePets(!!data.next);
       } catch (err) {
-        console.log("Fetch Pet Data error:", err);
+        // console.log("Fetch Pet Data error:", err);
       }
     };
 
     const timer = setTimeout(() => {
-      // setIsCurrentUserLoaded(!!currentUser);
       setIsLoading(false);
       fetchPetData();
     }, 1000);
@@ -76,12 +75,10 @@ const LikedPageSorted = () => {
               newData.results.push(...picsWithTypes);
               setHasMorePics(!!pics.data.next);
               setPage((prevPage) => prevPage + 1);
-            } else if (pics && pics.error) {
-              console.log("Error in pics request:", pics.error.message);
-              setHasMorePics(false);
-            }
+            } 
           } catch (err) {
-            console.log("Error fetching pics:", err);
+            // console.log("Error fetching pics:", err);
+            setHasMorePics(false);
           }
         }
 
@@ -101,12 +98,10 @@ const LikedPageSorted = () => {
               newData.results.push(...talesWithTypes);
               setHasMoreTales(!!tales.data.next);
               setPage((prevPage) => prevPage + 1);
-            } else if (tales && tales.error) {
-              console.log("Error in tales request:", tales.error.message);
-              setHasMoreTales(false);
-            }
+            } 
           } catch (err) {
-            console.log("Error fetching tales:", err);
+            // console.log("Error fetching tales:", err);
+            setHasMoreTales(false);
           }
         }
 
@@ -117,7 +112,7 @@ const LikedPageSorted = () => {
 
         setLikedData(newData);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 

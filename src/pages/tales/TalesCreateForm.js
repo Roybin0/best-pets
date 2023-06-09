@@ -45,7 +45,7 @@ function TaleCreateForm() {
                 const { data } = await axiosReq.get(`/pets/?owner__username=${encodedOwner}`);
                 setPets(data);
             } catch (err) {
-                console.log("Fetch data error:", err);
+                // console.log("Fetch data error:", err);
             }
         };
 
@@ -87,7 +87,7 @@ function TaleCreateForm() {
             const { data } = await axiosReq.post("/pettales/", formData);
             history.push(`/tales/${data.id}`);
         } catch (err) {
-            console.log(err)
+            // console.log(err)
             if (err.response?.status !== 401) {
                 setErrors(err.response?.data);
             }

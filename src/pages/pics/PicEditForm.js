@@ -43,7 +43,7 @@ function PicEditForm() {
 
                 is_owner ? setPicData({ pet, image, description, }) : history.push('/')
             } catch (err) {
-                console.log(err)
+                // console.log(err)
             }
         };
 
@@ -56,9 +56,8 @@ function PicEditForm() {
                 const encodedOwner = encodeURIComponent(is_owner);
                 const { data } = await axiosReq.get(`/pets/?owner__username=${encodedOwner}`);
                 setPets(data);
-                // console.log("API response:", data);
             } catch (err) {
-                console.log(err);
+                // console.log(err);
             }
         };
 
@@ -99,7 +98,7 @@ function PicEditForm() {
             const { data } = await axiosReq.put(`/petpics/${id}`, formData);
             history.push(`/pics/${data.id}`);
         } catch (err) {
-            console.log(err)
+            // console.log(err)
             if (err.response?.status !== 401) {
                 setErrors(err.response?.data);
             }
