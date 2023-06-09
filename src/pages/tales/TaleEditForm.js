@@ -103,7 +103,7 @@ function TaleEditForm() {
         formData.append("tale", tale);
 
         try {
-            const { data } = await axiosReq.put(`/pettales/${id}`, formData);
+            const { data } = await axiosReq.put(`/pettales/${id}/`, formData);
             history.push(`/tales/${data.id}`);
         } catch (err) {
             // console.log(err);

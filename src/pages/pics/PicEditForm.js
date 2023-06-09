@@ -95,7 +95,7 @@ function PicEditForm() {
         formData.append("description", description)
 
         try {
-            const { data } = await axiosReq.put(`/petpics/${id}`, formData);
+            const { data } = await axiosReq.put(`/petpics/${id}/`, formData);
             history.push(`/pics/${data.id}`);
         } catch (err) {
             // console.log(err)

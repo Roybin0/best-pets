@@ -74,7 +74,7 @@ function PetEditForm() {
         formData.append("about", about)
 
         try {
-            const { data } = await axiosReq.put(`/pets/${id}`, formData);
+            const { data } = await axiosReq.put(`/pets/${id}/`, formData);
             history.push(`/pets/${data.id}`);
         } catch (err) {
             // console.log(err)
