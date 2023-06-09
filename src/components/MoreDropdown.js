@@ -21,7 +21,7 @@ export const MoreDropdown = ({ handleEdit, handleDelete }) => {
             <Dropdown.Toggle 
                 as={ThreeDots} 
                 id="dropdown-custom-components"
-                className={styles.Active}
+                activeClassName={styles.Active}
             >
                 Custom toggle
             </Dropdown.Toggle>
@@ -52,18 +52,27 @@ export const MoreDropdown = ({ handleEdit, handleDelete }) => {
 export function ProfileEditDropdown({ id }) {
     const history = useHistory();
     return (
-        <Dropdown className={`ml-auto px-3 ${styles.Zindex}`} drop="left">
-            <Dropdown.Toggle as={ThreeDots} />
+        <Dropdown 
+            className={`ml-auto px-3 ${styles.ProfileDark}`} 
+            drop="down"
+        >
+            <Dropdown.Toggle 
+                as={ThreeDots}
+                activeClassName={styles.Active}
+                className={styles.ProfileDark}
+            />
             <Dropdown.Menu>
                 <Dropdown.Item
                     onClick={() => history.push(`/owners/${id}/edit`)}
                     aria-label="edit-profile"
+                    className={styles.ProfileDropdownItem}
                 >
                     <i className="fas fa-edit" /> edit profile
                 </Dropdown.Item>
                 <Dropdown.Item
                     onClick={() => history.push(`/owners/${id}/edit/username`)}
                     aria-label="edit-username"
+                    className={styles.ProfileDropdownItem}
                 >
                     <i className="far fa-id-card" />
                     change username
@@ -71,6 +80,7 @@ export function ProfileEditDropdown({ id }) {
                 <Dropdown.Item
                     onClick={() => history.push(`/owners/${id}/edit/password`)}
                     aria-label="edit-password"
+                    className={styles.ProfileDropdownItem}
                 >
                     <i className="fas fa-key" />
                     change password

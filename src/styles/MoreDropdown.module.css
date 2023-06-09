@@ -23,3 +23,31 @@
 .Active:focus {
   color: #fcc100;
 }
+
+.ActiveDark {
+  color: #242A3D;
+}
+
+.ActiveDark:focus {
+  color: #fcc100;
+}
+
+.ProfileDark {
+  background-color: #242A3D;
+  z-index: 99;
+}
+
+.ProfileDropdownItem {
+  background-color: #242A3D;
+  color: #FCFCD4;
+  border: 1px solid #FCFCD4;
+}
+
+.ProfileDropdownItem i {
+  color: #fcc100;
+}
+
+.ProfileDropdownItem:hover {
+  background-color: #FCFCD4;
+  color: #242A3D;
+}

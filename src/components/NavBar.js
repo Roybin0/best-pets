@@ -32,26 +32,29 @@ const NavBar = () => {
 
     const addContentIcon = (
 
-        <NavDropdown 
+        <NavDropdown
             title="New"
             id="content-dropdown"
             className={styles.DropdownContainer}
         >
             <NavDropdown.Item
                 className={`${styles.NavLink} ${styles.DropdownLink}`}
-                href='/pets/new'
+                as={NavLink}
+                to="/pets/new"
             >
                 <i className="fas fa-plus"></i> Add a Pet
             </NavDropdown.Item>
             <NavDropdown.Item
                 className={`${styles.NavLink} ${styles.DropdownLink}`}
-                href='/pics/new'
+                as={NavLink}
+                to="/pics/new"
             >
                 <i className="fas fa-plus"></i> Add a Pic
             </NavDropdown.Item>
             <NavDropdown.Item
                 className={`${styles.NavLink} ${styles.DropdownLink}`}
-                href='/tales/new'
+                as={NavLink}
+                to="/tales/new"
             >
                 <i className="fas fa-plus"></i> Add a Tale
             </NavDropdown.Item>
@@ -71,7 +74,7 @@ const NavBar = () => {
 
             <NavLink
                 className={styles.NavLink}
-                activeClassName={styles.Active} 
+                activeClassName={styles.Active}
                 to='/signup'
             >
                 <i className="fas fa-plus"></i> Sign Up
@@ -81,21 +84,23 @@ const NavBar = () => {
 
     const loggedInIcons = (
         <>
-            <NavDropdown 
-                title={<Avatar src={currentUser?.profile_image} height={40} />} 
+            <NavDropdown
+                title={<Avatar src={currentUser?.profile_image} height={40} />}
                 id="profile-dropdown"
                 ref={avatarDropdownRef}
                 className={styles.DropdownContainer}
             >
                 <NavDropdown.Item
                     className={`${styles.NavLink} ${styles.DropdownLink}`}
-                    href={`/owners/${currentUser?.owner_id}`}
+                    as={NavLink}
+                    to={`/owners/${currentUser?.owner_id}`}
                 >
                     <i className="fas fa-user"></i> My Profile
                 </NavDropdown.Item>
                 <NavDropdown.Item
                     className={`${styles.NavLink} ${styles.DropdownLink}`}
-                    href='/'
+                    as={NavLink}
+                    to="/"
                     onClick={handleSignOut}
                 >
                     <i className="fas fa-sign-out-alt"></i> Sign Out
@@ -123,11 +128,11 @@ const NavBar = () => {
                     </Navbar.Brand>
                 </NavLink>
                 {currentUser && addContentIcon}
-                <Navbar.Toggle 
+                <Navbar.Toggle
                     className={styles.Hamburger}
                     ref={ref}
-                    onClick={() => setExpanded(!expanded)} 
-                    aria-controls="basic-navbar-nav" 
+                    onClick={() => setExpanded(!expanded)}
+                    aria-controls="basic-navbar-nav"
 
                 />
                 <Navbar.Collapse id="basic-navbar-nav">

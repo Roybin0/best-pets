@@ -12,11 +12,29 @@
     margin-bottom: -10px;
 }
 
+.Header {
+    color: #242A3D !important ;
+    letter-spacing: 0.2em;
+}
+
 .PetCard {
     flex: 0 0 auto;
     margin-right: 10px;
     width: 200px;
 }
+
+.WordBreak {
+    word-break: break-all;
+}
+
+.Dark {
+    color: #242A3D !important;
+}
+
+.LightText {
+    color: #FCFCD4;
+}
+
 
 @media screen and (max-width: 991px) {
     .ProfileImage {

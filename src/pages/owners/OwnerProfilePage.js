@@ -55,10 +55,10 @@ function OwnerProfilePage() {
                         axiosReq.get(`/pettales/?owner=${id}`),
                         axiosReq.get(`/petpics/?owner=${id}`),
                     ]);
-                setOwnerData((prevState) => ({
-                    ...prevState,
-                    pageOwner: { results: [pageOwner] },
-                }));
+                    setOwnerData((prevState) => ({
+                        ...prevState,
+                        pageOwner: { results: [pageOwner] },
+                      }));
                 setOwnerPets((ownerPets));
                 setOwnerPics(ownerPics);
                 setOwnerTales(ownerTales);
@@ -70,60 +70,73 @@ function OwnerProfilePage() {
         fetchData();
     }, [id, setOwnerData]);
 
+    console.log("Owner", owner)
+    console.log("currentUser username",currentUser?.username)
+    console.log("Owner.owner",owner?.owner)
+    console.log("id", owner?.id)
+
     const mainProfile = (
         <>
             <Row noGutters className="px-3 text-center">
-                <Col lg={3} className="text-lg-left">
+                <Col xs={12} md={3} className="text-lg-left">
                     <Image
                         className={styles.ProfileImage}
                         roundedCircle
                         src={owner?.image}
                     />
                 </Col>
-                <Col lg={6}>
-                    <h3 className="m-2">{owner?.owner}</h3>
+                <Col xs={12} md={6}>
+                    <h1 className={`${styles.Header} m-2`}>{owner?.owner}</h1>
                     <Row className="justify-content-center no-gutters">
-                        <Col xs={3} className="my-2">
+                        <Col xs={4} className="my-2">
                             <div>{owner?.pets_count}</div>
                             <div>{owner?.pets_count === 1 ? 'pet' : 'pets'}</div>
                         </Col>
-                        <Col xs={3} className="my-2">
+                        <Col xs={4} className="my-2">
+                            <div>{owner?.petpics_count}</div>
+                            <div>{owner?.petpics_count === 1 ? 'pic' : 'pics'}</div>
+                        </Col>
+                        <Col xs={4} className="my-2">
+                            <div>{owner?.pettales_count}</div>
+                            <div>{owner?.pettales_count === 1 ? 'tale' : 'tales'}</div>
+                        </Col>
+                        <Col xs={4} className="my-2">
                             <div>{owner?.followers_count}</div>
                             <div>{owner?.followers_count === 1 ? 'follower' : 'followers'}</div>
                         </Col>
-                        <Col xs={3} className="my-2">
-                            <div>following</div>
+                        <Col xs={4} className="my-2">
                             <div>{owner?.following_count_owners}</div>
-                            <div>{owner?.following_count_owners === 1 ? 'owner' : 'owners'}</div>
+                            <div>{owner?.following_count_owners === 1 ? 'owner followed' : 'owners followed'}</div>
                         </Col>
-                        <Col xs={3} className="my-2">
-                            <div>following</div>
+                        <Col xs={4} className="my-2">
                             <div>{owner?.following_count_pets}</div>
-                            <div>{owner?.following_count_pets === 1 ? 'pet' : 'pets'}</div>
+                            <div>{owner?.following_count_pets === 1 ? 'pet followed' : 'pets followed'}</div>
                         </Col>
                     </Row>
                 </Col>
 
-                <Col lg={3} className="text-lg-right">
-                    {owner?.is_owner && <ProfileEditDropdown id={owner?.id} />}
+                <Col md={3} >
+                    {owner?.is_owner && owner?.id && <ProfileEditDropdown id={owner?.id} className={styles.Dark} />}
                     {currentUser &&
                         !is_owner &&
                         (owner?.following_id ? (
                             <Button
-                                className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
+                                className={`${btnStyles.Button} ${btnStyles.Dark}`}
                                 onClick={() => handleUnfollow(owner)}
                             >
                                 unfollow
                             </Button>
                         ) : (
                             <Button
-                                className={`${btnStyles.Button} ${btnStyles.Black}`}
+                                className={`${btnStyles.Button} ${btnStyles.DarkOutline}`}
                                 onClick={() => handleFollow(owner)}
                             >
                                 follow
                             </Button>
                         ))}
                 </Col>
+            </Row>
+            <Row className="text-center">
                 {owner?.about && <Col className="p-3">{owner.about}</Col>}
             </Row>
         </>
@@ -132,10 +145,13 @@ function OwnerProfilePage() {
     const mainOwnerPets = (
         <>
             <hr />
-            <Row>
+            <Row className="d-flex align-items-center">
                 <Col>
                     <p className="text-center">{owner?.owner}'s Pets</p>
                 </Col>
+                </Row>
+                
+            <Row className="d-flex justify-content-center">
                 {ownerPets.results.length ? (
                     ownerPets.results.map((pet) => (
                         <Col key={pet.id}>
@@ -160,8 +176,9 @@ function OwnerProfilePage() {
             <hr />
             {ownerPics.results.length ? (
                 <InfiniteScroll
+                    className={styles.LightText}
                     children={ownerPics.results.map((pic) => (
-                        <Pic key={pic.id} {...pic} setPics={setOwnerPics} />
+                        <Pic key={pic.id} {...pic} />
                     ))}
                     dataLength={ownerPics.results.length}
                     loader={<Asset spinner />}
@@ -184,8 +201,9 @@ function OwnerProfilePage() {
             <hr />
             {ownerTales.results.length ? (
                 <InfiniteScroll
+                    className={styles.LightText}
                     children={ownerTales.results.map((tale) => (
-                        <Tale key={tale.id} {...tale} setTales={setOwnerTales} />
+                        <Tale key={tale.id} {...tale}/>
                     ))}
                     dataLength={ownerTales.results.length}
                     loader={<Asset spinner />}
@@ -207,12 +225,6 @@ function OwnerProfilePage() {
 
     const renderActiveContent = () => {
         switch (activeOption) {
-            case "pets":
-                return (
-                    <>
-                        {mainOwnerPets}
-                    </>
-                );
             case "pics":
                 return (
                     <>
@@ -239,22 +251,16 @@ function OwnerProfilePage() {
                         <>
                             {mainProfile}
                             <div className={styles.OwnerStats}>
+                            {mainOwnerPets}
                                 <Button
-                                    className={`${styles.OwnerStatsButton} ${activeOption === "pets" && styles.ActiveOption
-                                        }`}
-                                    onClick={() => handleOptionClick("pets")}
-                                >
-                                    Pets
-                                </Button>
-                                <Button
-                                    className={`${styles.OwnerStatsButton} ${activeOption === "pics" && styles.ActiveOption
+                                    className={`${styles.OwnerStatsButton} ${btnStyles.Button} ${btnStyles.Wide} ${activeOption === "pics" && styles.ActiveOption
                                         }`}
                                     onClick={() => handleOptionClick("pics")}
                                 >
                                     Pet Pics
                                 </Button>
                                 <Button
-                                    className={`${styles.OwnerStatsButton} ${activeOption === "tales" && styles.ActiveOption
+                                    className={`${styles.OwnerStatsButton} ${btnStyles.Button} ${btnStyles.Wide} ${activeOption === "tales" && styles.ActiveOption
                                         }`}
                                     onClick={() => handleOptionClick("tales")}
                                 >

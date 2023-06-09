@@ -24,6 +24,11 @@
     border-color: #242A3D;
 }
 
+.Dark {
+    background-color: #242A3D;
+    color: #fcc100;
+}
+
 .Wide {
     padding: 10px 50px;
     width: 100%;

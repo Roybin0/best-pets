@@ -17,7 +17,7 @@
 }
 
 .NavBar .DropdownContainer {
-    background-color: #242A3D;
+    background-color: #242A3D !important;
     padding: 0px !important;
 }
 
@@ -27,12 +27,22 @@
 }
 
 .DropdownLink {
-    background-color: #242A3D;
+    background-color: #242A3D !important;
     color: #FCFCD4;
 }
 
 .DropdownLink i {
-    color: #fccc20
+    color: #fccc20;
+}
+
+.DropdownLink:hover {
+    background-color: #FCFCD4 !important;
+    color: #242A3D;
+}
+
+.DropdownLink:focus {
+    background-color: #fccc20;
+    color: #242A3D;
 }
 
 .NavBar .Hamburger {

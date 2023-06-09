@@ -150,9 +150,7 @@ const Tale = (props) => {
             <Link to={`/tales/${id}`} className={appStyles.NoLinkUnderline}>
             <Row>
                 <Col xs={12} md={6} className="mb-3 mb-md-0">
-                    <Link to={`/tales/${id}`}>
                         <Card.Img className={styles.TaleImage} src={image} alt={pet_name} />
-                    </Link>
                 </Col>
                 <Col xs={12} md={6} className={styles.TalesContent}>
                         <Col>

@@ -1,12 +1,12 @@
 .Form {
     border: none;
-    border-bottom: 2px #00d1ff solid;
+    border-bottom: 2px #fccc20 solid;
 }
 
 .Button {
     border: none;
     background-color: #242a3d;
-    color: aliceblue;
+    color: #fccc20;
     border-radius: 100px;
     padding: 4px 10px;
     min-width: 75px;
@@ -15,6 +15,6 @@
 
 .Button:hover {
     cursor: pointer;
-    background-color: aliceblue;
+    background-color: #fccc20;
     color: #242a3d;
 }
