@@ -4,7 +4,7 @@
 
 Best Pets is a front-end React application designed to provide a fun and engaging experience for animal enthusiasts. Whether you're a proud pet owner or simply adore cute and cuddly creatures, Best Pets offers a vibrant community where you can share captivating tales, discover new furry friends, and connect with fellow pet enthusiasts from around the world.
 
-The link to the live website can be found here: [Best Pets](https://bestpets.herokuapp.com/).
+The link to the live website can be found here: [Best Pets](https://bestpets.herokuapp.com/) and you can view more details about the underlying API here: [Best Pets API](https://github.com/Roybin0/best-pets-api).
 
 ## Table of Contents
 
