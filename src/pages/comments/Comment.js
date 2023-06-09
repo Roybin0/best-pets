@@ -48,27 +48,32 @@ const Comment = (props) => {
 
     return (
         <>
-            <hr />
+            <div className={styles.MainStyle}>
             <Media>
-                <Link to={`/owner/${owner_id}`}>
+                <Link to={`/owner/${owner_id}`} >
                     <Avatar src={owner_profile_image} />
                 </Link>
-                <Media.Body className="align-self-center ml-2">
-                    <span className={styles.Owner}>{owner}</span>
-                    <span className={styles.Date}>{updated_at}</span>
-                    <div className={`${styles.CommentContainer} d-flex align-items-center justify-between`}>
-                        <div className={styles.CommentText}>
-                            <p>{comment}</p>
+                <Media.Body className={`align-self-center ml-2`}>
+                    <div className={styles.CommentContainer}>
+                        <div className="d-flex">
+                            <span className={styles.Owner}>{owner}</span>
+                            <span className={styles.Date}>{updated_at}</span>
                         </div>
                         {is_owner && !showEditForm && (
-                            <div className={`${styles.MoreDropdownContainer} ml-2`}>
+                            <div className={`${styles.MoreDropdownContainer} ml-2 d-flex justify-content-end`}>
                                 <MoreDropdown
                                     handleEdit={() => setShowEditForm(true)}
                                     handleDelete={handleDelete}
+                                    style={{ color: '#242A3D' }}
                                 />
                             </div>
                         )}
                     </div>
+
+                    <div className={styles.CommentText}>
+                        <p>{comment}</p>
+                    </div>
+
                     {showEditForm && (
                         <CommentEditForm
                             id={id}
@@ -80,8 +85,8 @@ const Comment = (props) => {
                         />
                     )}
                 </Media.Body>
-
             </Media>
+            </div>
         </>
     );
 };

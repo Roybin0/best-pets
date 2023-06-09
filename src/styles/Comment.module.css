@@ -1,28 +1,41 @@
-.Owner {
-    font-weight: bold;
-    color: #242A3D;
-    margin-right: 8px;
-}
-
-.Date {
-    font-weight: lighter;
-    color: #a6a6a7;
-}
-
-i {
-    color: #242A3D !important;
+.MainStyle {
+    background-color: #242A3D;
+    padding: 10px;
+    color: #FCFCD4;
+    border: 1px solid #FCFCD4;
 }
 
 .CommentContainer {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
-.CommentText {
-    flex: 1;
+.Owner {
+    font-weight: bold;
+    color: #FCFCD4;
+    margin-right: 8px;
+    flex-shrink: 0;
+    /* Prevents the span from shrinking */
+}
+
+.Date {
+    font-weight: lighter;
+    color: #a6a6a7;
+    flex-shrink: 0;
+    /* Prevents the span from shrinking */
 }
 
 .MoreDropdownContainer {
-    margin-left: auto;
     padding-right: 20px;
+    border: #242A3D;
+}
+
+.MoreDropdownContainer .fa-ellipsis-v {
+    color: #242A3D !important;
+    background-color: #242A3D;
+    font-size: 1.5rem;
+    padding: 3px;
+    vertical-align: middle;
+
 }
