@@ -5,6 +5,7 @@
 
 .Button {
     border: none;
+    font-weight: bold;
     background-color: #242a3d;
     color: #fccc20;
     border-radius: 100px;

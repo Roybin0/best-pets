@@ -1,10 +1,28 @@
 .Owner {
     font-weight: bold;
-    color: #2142b2;
+    color: #242A3D;
     margin-right: 8px;
 }
 
 .Date {
     font-weight: lighter;
-    color: #c1c1c5;
+    color: #a6a6a7;
+}
+
+i {
+    color: #242A3D !important;
+}
+
+.CommentContainer {
+    display: flex;
+    align-items: center;
+}
+
+.CommentText {
+    flex: 1;
+}
+
+.MoreDropdownContainer {
+    margin-left: auto;
+    padding-right: 20px;
 }

@@ -48,7 +48,7 @@ export const PetDataProvider = ({ children }) => {
       }
       await fetchPopularPets();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -81,7 +81,7 @@ export const PetDataProvider = ({ children }) => {
       }
       await fetchPopularPets();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -93,7 +93,7 @@ export const PetDataProvider = ({ children }) => {
         popularPets: data,
       }));
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
