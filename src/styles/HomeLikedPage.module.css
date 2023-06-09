@@ -43,3 +43,7 @@
 .WordBreak {
     word-break: break-all;
 }
+
+.SpaceBetween {
+    justify-content: space-around;
+}

@@ -73,7 +73,7 @@ const LikedPageSorted = () => {
               newData.results.push(...picsWithTypes);
               setHasMorePics(!!pics.data.next);
               setPage((prevPage) => prevPage + 1);
-            } 
+            }
           } catch (err) {
             // console.log("Error fetching pics:", err);
             setHasMorePics(false);
@@ -96,7 +96,7 @@ const LikedPageSorted = () => {
               newData.results.push(...talesWithTypes);
               setHasMoreTales(!!tales.data.next);
               setPage((prevPage) => prevPage + 1);
-            } 
+            }
           } catch (err) {
             // console.log("Error fetching tales:", err);
             setHasMoreTales(false);
@@ -134,9 +134,10 @@ const LikedPageSorted = () => {
             </Container>
           ) : likedPets.results ? (
             <>
-              <div className={`d-flex align-items-center ${styles.Border} ${styles.Rounded}`}>
+            <Container fluid >
+              <div id="PetContainer" className={`d-flex align-items-center ${styles.Border} ${styles.Rounded}`}>
                 <h3>Followed <br /> pets:</h3>
-                <div className="d-flex flex-wrap">
+                <div className={`d-flex flex-wrap ${styles.SpaceBetween} ${styles.PetContainer}`}>
                   {likedPets.results.map((pet) => (
                     <OwnerProfilePet
                       rowkey={pet.id}
@@ -146,6 +147,7 @@ const LikedPageSorted = () => {
                   ))}
                 </div>
               </div>
+              </Container>
             </>
           ) : (
             <Asset
