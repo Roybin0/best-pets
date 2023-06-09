@@ -35,3 +35,11 @@
     border: 1px solid #dadadf;
     padding: 5px;
 }
+
+.Rounded {
+    border-radius: 15px;
+}
+
+.WordBreak {
+    word-break: break-all;
+}
